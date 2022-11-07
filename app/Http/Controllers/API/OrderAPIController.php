@@ -634,7 +634,7 @@ class OrderAPIController extends Controller
             $order = $this->orderRepository->findWithoutFail($id);
 
             // return $order->order_status_id;exit();
-            if (empty($order) || $order->order_status_id == 5) {
+            if (empty($order) || $order->order_status_id !=1) {
                 return $this->sendError('Order not found');
             }
 
