@@ -622,4 +622,21 @@ class OrderAPIController extends Controller
 
     }
 
+
+
+    public function destroy($id)
+    {
+            $this->orderRepository->pushCriteria(new OrdersOfUserCriteria(auth()->id()));
+            $order = $this->orderRepository->findWithoutFail($id);
+
+            // return $order->order_status_id;exit();
+            if (empty($order) || $order->order_status_id == 5) {
+                return $this->sendError('Order not found');
+            }
+
+            $this->orderRepository->delete($id);
+
+            return $this->sendResponse('success','Removed successfully');
+    }
+
 }

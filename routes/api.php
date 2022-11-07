@@ -128,7 +128,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('orders', 'API\OrderAPIController');
     Route::post('orders/editTime/{id}', 'API\OrderAPIController@editDeliveryTime');
     Route::get('orders/fees_order/{id}', 'API\OrderAPIController@feesOrder');
-    Route::post('orders/cancelOrder', 'API\OrderAPIController@cancelOrder'); 
+    Route::post('orders/cancelOrder', 'API\OrderAPIController@cancelOrder');
+    Route::post('orders/destroy/{id}', 'API\OrderAPIController@destroy');
 
     Route::get('fetchorders', 'API\OrderAPIController@fetchdrivers');
 
