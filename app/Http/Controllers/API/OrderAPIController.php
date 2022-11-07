@@ -534,7 +534,7 @@ class OrderAPIController extends Controller
                 return $this->sendError('Order not found');
             }
             try {
-                    $order->update(['order_status_id'=>6,'onway'=>0]);
+                    $order->update(['order_status_id'=>6,'onway'=>0,'active'=>0]);
                     
                     // Driver::where('user_id',$user->id)->update([''])
 
