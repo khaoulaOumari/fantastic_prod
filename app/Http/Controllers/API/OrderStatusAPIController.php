@@ -38,12 +38,12 @@ class OrderStatusAPIController extends Controller
     public function index(Request $request)
     {
         try{
-            $this->orderStatusRepository->pushCriteria(new RequestCriteria($request));
-            $this->orderStatusRepository->pushCriteria(new LimitOffsetCriteria($request));
+            // $this->orderStatusRepository->pushCriteria(new RequestCriteria($request));
+            // $this->orderStatusRepository->pushCriteria(new LimitOffsetCriteria($request));
         } catch (RepositoryException $e) {
             return $this->sendError($e->getMessage());
         }
-        $orderStatuses = $this->orderStatusRepository->all();
+        $orderStatuses = $this->orderStatusRepository->select('id','status','color')->get();
 
         return $this->sendResponse($orderStatuses->toArray(), 'Order Statuses retrieved successfully');
     }

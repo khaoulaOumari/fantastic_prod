@@ -266,4 +266,21 @@ class FoodController extends Controller
             Log::error($e->getMessage());
         }
     }
+    public function editShow(Request $request){
+        $food = $this->foodRepository->findWithoutFail($request->foodId);
+
+        if (empty($food)) {
+            Flash::error('food not found');
+            return redirect(route('foods.index'));
+        }
+
+        $food->update([
+            'featured' => !$food['featured']
+        ]);
+        return response()->json('success');
+
+        // Flash::success(__('lang.updated_successfully', ['operator' => __('lang.restaurant')]));
+
+        // return redirect(route('superettes.index'));
+    }
 }

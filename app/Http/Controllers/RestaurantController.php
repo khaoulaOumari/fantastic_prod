@@ -310,6 +310,7 @@ class RestaurantController extends Controller
             return redirect(route('superettes.index'));
         }
 
+        return $restaurant->active;
         $restaurant->update([
             'active' => !$restaurant->active
         ]);

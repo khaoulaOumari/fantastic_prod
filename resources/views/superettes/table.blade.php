@@ -14,14 +14,14 @@
   function activeSup(row){
 
     swal({
-        title: 'Vous voulez vraiment modifier cette supérette?',
-        // text: 'This record and it`s details will be permanantly deleted!',
-        icon: 'warning',
+        title: "Modifier", 
+        confirmButtonText: "{{trans('lang.ok')}}",
+        cancelButtonText: 'Annuler',
+        text: 'Vous voulez vraiment modifier cette supérette ?',
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Oui',
-        cancelButtonText: 'Annuler'
+        confirmButtonClass: "btn-success",
+        cancelButtonClass: "btn-danger"
         },function(value) {
         if (value) {
             var url = "";
@@ -34,9 +34,10 @@
                     if(data=="success"){
                         swal({
                             position: 'top-end',
-                            icon: 'success',
-                            title: 'Supérette bien modifiée',
-                            showConfirmButton: false,
+                            title: "succès", 
+                            confirmButtonText: "{{trans('lang.ok')}}",
+                            text: 'Supérette bien modifié',
+                            type: "success",
                             timer: 1500
                             })
                     }

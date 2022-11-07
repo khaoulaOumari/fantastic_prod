@@ -43,8 +43,8 @@ class RestaurantDataTable extends DataTable
             ->editColumn('closed', function ($food) {
                 return getNotBooleanColumn($food, 'closed');
             })
-            ->editColumn('available_for_delivery', function ($food) {
-                return getBooleanColumn($food, 'available_for_delivery');
+            ->editColumn('available_for_delivery', function ($restaurant) {
+                return getBooleanColumn($restaurant, 'available_for_delivery');
             })
             ->editColumn('active', function ($restaurant) {
                 // return getBooleanColumnSwitch($restaurant, 'active');

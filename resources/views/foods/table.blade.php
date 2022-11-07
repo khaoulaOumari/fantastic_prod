@@ -12,6 +12,7 @@
 <link href="{{ asset('css/checkbox.css') }}" rel="stylesheet">
 <script>
   function showFood(row){
+    console.log(row)
 
     swal({
         title: "Modifier", 
@@ -27,29 +28,29 @@
             console.log(row)
             var url = "";
             url = "{{url('foods/editShow')}}";
-            // $.ajax({
-            //     method: "POST",
-            //     url: url,
-            //     data: {_token: "{{csrf_token()}}", supId: row},
-            //     success: function(data){
-            //         if(data=="success"){
-            //             swal({
-            //                 position: 'top-end',
-                            // title: "succès", 
-                            // confirmButtonText: "{{trans('lang.ok')}}",
-                            // text: 'sous-réclamation bien ajoutée',
-                            // type: "success",
-                            // timer: 1500
-            //                 })
-            //         }
-            //         // alert("Produit bien modifié");
-            //         // location.reload();
+            $.ajax({
+                method: "POST",
+                url: url,
+                data: {_token: "{{csrf_token()}}", foodId: row},
+                success: function(data){
+                    if(data=="success"){
+                        swal({
+                            position: 'top-end',
+                            title: "succès", 
+                            confirmButtonText: "{{trans('lang.ok')}}",
+                            text: 'Produit bien modifié',
+                            type: "success",
+                            timer: 1500
+                            })
+                    }
+                    // alert("Produit bien modifié");
+                    // location.reload();
 
-            //     }, 
-            //     error: function(){
-            //         alert("error");
-            //     }
-            // })
+                }, 
+                error: function(){
+                    alert("error");
+                }
+            })
         }else{
             document.getElementById('active['+row+']').checked = !document.getElementById('active['+row+']').checked;
         }
