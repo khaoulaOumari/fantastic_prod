@@ -372,6 +372,9 @@ class OrderAPIController extends Controller
             ->where('orders.id',$order->id)->first();
             $restau->is_open=$is_open;
 
+            // Notification::send($order->restaurant->users, new NewOrder($order));
+            Notification::send($order->restaurant->users, new NewOrder($order));
+
             \DB::commit();
             return $this->sendResponse($restau->toArray(), __('lang.saved_successfully', ['operator' => __('lang.order')]));
             // $order= $order->with('restaurant');
@@ -381,8 +384,7 @@ class OrderAPIController extends Controller
 
             // get all users of a restaurant for notifs
 
-            Notification::send($order->restaurant->users, new NewOrder($order));
-            Notification::send($order->restaurant->users, new NewOrder($order));
+            
 
 
         } catch (ValidatorException $e) {
@@ -461,6 +463,7 @@ class OrderAPIController extends Controller
             if (setting('enable_notifications', false)) {
                 if (isset($input['order_status_id']) && $input['order_status_id'] != $oldOrder->order_status_id) {
                     Notification::send([$order->user], new StatusChangedOrder($order));
+                    Notification::send($order->restaurant->users, new StatusChangedOrder($order));
                 }
 
                 if (isset($input['driver_id']) && ($input['driver_id'] != $oldOrder['driver_id'])) {
@@ -506,11 +509,12 @@ class OrderAPIController extends Controller
 
                     if(setting('enable_notifications', false)) {
                             Notification::send([$order->user], new StatusChangedOrder($order));
+                            Notification::send($order->restaurant->users, new StatusChangedOrder($order));
 
                         if ($order['driver_id']) {
                             $driver = $this->userRepository->findWithoutFail($user->id);
                             if (!empty($driver)) {
-                                Notification::send([$driver], new AssignedOrder($order));
+                                Notification::send([$driver], new StatusChangedOrder($order));
                             }
                         }
                     }
@@ -530,16 +534,16 @@ class OrderAPIController extends Controller
         $user = auth()->user();
         if($request->order_id && $user){
             $order = Order::where('id',$request->order_id)->where('user_id',$user->id)->first();
-            if (empty($order) || $order->order_status_id==5) {
+            if (empty($order) || $order->order_status_id == 5) {
                 return $this->sendError('Order not found');
             }
             try {
                     $order->update(['order_status_id'=>6,'onway'=>0,'active'=>0]);
                     
-                    // Driver::where('user_id',$user->id)->update([''])
 
                     if(setting('enable_notifications', false)) {
                             Notification::send([$order->user], new StatusChangedOrder($order));
+                            Notification::send($order->restaurant->users, new StatusChangedOrder($order));
 
                     }
 

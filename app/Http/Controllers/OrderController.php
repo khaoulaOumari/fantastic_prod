@@ -311,6 +311,7 @@ class OrderController extends Controller
             if (setting('enable_notifications', false)) {
                 if (isset($input['order_status_id']) && $input['order_status_id'] != $oldOrder->order_status_id) {
                     Notification::send([$order->user], new StatusChangedOrder($order));
+                    Notification::send($order->restaurant->users, new StatusChangedOrder($order));
                 }
 
                 
@@ -477,6 +478,22 @@ class OrderController extends Controller
                             }
                         }
                     }
+
+                    if (setting('enable_notifications', false)) {
+                        if ($request->order_status_id && $request->order_status_id != $old_status_id) {
+                            Notification::send([$order->user], new StatusChangedOrder($order));
+                            Notification::send($order->restaurant->users, new StatusChangedOrder($order));
+                        }
+        
+                        
+                        if (isset($input['driver_id']) && ($input['driver_id'] != $oldOrder['driver_id'])) {
+                            $driver = $this->userRepository->findWithoutFail($input['driver_id']);
+                            if (!empty($driver)) {
+                                Notification::send([$driver], new AssignedOrder($order));
+                            }
+                        }
+                    }
+                    
                     return response()->json(['success']);   
                 }else{
                     return response()->json(['no statut']);   
@@ -520,6 +537,8 @@ class OrderController extends Controller
         }
         
     }
+
+
     function OrderHistories(Request $request){
         // $order = $this->orderRepository->findWithoutFail($id);
         // if (empty($order)) {
@@ -568,7 +587,6 @@ class OrderController extends Controller
 
     }
 
-
     public function addNewFood(Request $request){
         $input = $request->all();
         $order = Order::find($request->orderId);
@@ -587,15 +605,6 @@ class OrderController extends Controller
 
             return response()->json('success');
         }
-        
-        
-       
-        
-
-           
-
-
-
     }
     
 }

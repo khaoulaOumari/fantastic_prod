@@ -101,7 +101,7 @@ class FoodDataTable extends DataTable
                 ->where('user_restaurants.user_id', auth()->id())
                 ->groupBy('foods.id')
                 ->select('foods.*')->orderBy('foods.updated_at', 'desc');
-        } else if (auth()->user()->hasRole('Livreur')) {
+        } else if (auth()->user()->hasRole('driver')) {
             return $model->newQuery()->with("category")
                 ->join('food_restaurants', 'foods.id', '=', 'food_restaurants.food_id')
                 ->join('restaurants', 'food_restaurants.restaurant_id', '=', 'restaurants.id')
