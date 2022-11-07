@@ -40,12 +40,12 @@ class RestaurantDataTable extends DataTable
             ->editColumn('updated_at', function ($restaurant) {
                 return getDateColumn($restaurant, 'updated_at');
             })
-            ->editColumn('closed', function ($food) {
-                return getNotBooleanColumn($food, 'closed');
-            })
-            ->editColumn('available_for_delivery', function ($restaurant) {
-                return getBooleanColumn($restaurant, 'available_for_delivery');
-            })
+            // ->editColumn('closed', function ($food) {
+            //     return getNotBooleanColumn($food, 'closed');
+            // })
+            // ->editColumn('available_for_delivery', function ($restaurant) {
+            //     return getBooleanColumn($restaurant, 'available_for_delivery');
+            // })
             ->editColumn('active', function ($restaurant) {
                 // return getBooleanColumnSwitch($restaurant, 'active');
                 if($restaurant->active){
@@ -59,6 +59,52 @@ class RestaurantDataTable extends DataTable
                 }else{
                     return '<div class="checkbox-switch">
                             <input type="checkbox" value="0" onclick="activeSup('.$restaurant->id.');" name="active" class="input-checkbox" id="active['.$restaurant->id.']">
+                            <div class="checkbox-animate">
+                            <span class="checkbox-off">Oui</span>
+                            <span class="checkbox-on">Non</span>
+                            </div>
+                        </div>';
+                }
+
+                
+                
+            })
+            ->editColumn('closed', function ($restaurant) {
+                // return getBooleanColumnSwitch($restaurant, 'active');
+                if($restaurant->closed){
+                    return '<div class="checkbox-switch">
+                            <input type="checkbox" checked=""  value="1" onclick="closeSup('.$restaurant->id.');" name="active" class="input-checkbox" id="active['.$restaurant->id.']">
+                            <div class="checkbox-animate">
+                            <span class="checkbox-off">Oui</span>
+                            <span class="checkbox-on">Non</span>
+                            </div>
+                        </div>';
+                }else{
+                    return '<div class="checkbox-switch">
+                            <input type="checkbox" value="0" onclick="closeSup('.$restaurant->id.');" name="active" class="input-checkbox" id="active['.$restaurant->id.']">
+                            <div class="checkbox-animate">
+                            <span class="checkbox-off">Oui</span>
+                            <span class="checkbox-on">Non</span>
+                            </div>
+                        </div>';
+                }
+
+                
+                
+            })
+            ->editColumn('available_for_delivery', function ($restaurant) {
+                // return getBooleanColumnSwitch($restaurant, 'active');
+                if($restaurant->available_for_delivery){
+                    return '<div class="checkbox-switch">
+                            <input type="checkbox" checked=""  value="1" onclick="deliverySup('.$restaurant->id.');" name="active" class="input-checkbox" id="active['.$restaurant->id.']">
+                            <div class="checkbox-animate">
+                            <span class="checkbox-off">Oui</span>
+                            <span class="checkbox-on">Non</span>
+                            </div>
+                        </div>';
+                }else{
+                    return '<div class="checkbox-switch">
+                            <input type="checkbox" value="0" onclick="deliverySup('.$restaurant->id.');" name="active" class="input-checkbox" id="active['.$restaurant->id.']">
                             <div class="checkbox-animate">
                             <span class="checkbox-off">Oui</span>
                             <span class="checkbox-on">Non</span>

@@ -253,6 +253,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('map/getAdress', 'RestaurantController@getAdress');
     Route::post('restaurant/editActive', 'RestaurantController@editActive');
+    Route::post('restaurant/editClose', 'RestaurantController@editClose');
+    Route::post('restaurant/editDelivery', 'RestaurantController@editDelivery');
+
+
   
 
 

@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
 use GuzzleHttp\Client;
+use App\Models\Restaurant;
 
 class RestaurantController extends Controller
 {
@@ -303,21 +304,55 @@ class RestaurantController extends Controller
     }
 
     public function editActive(Request $request){
-        $restaurant = $this->restaurantRepository->findWithoutFail($request->supId);
+        $restaurant = Restaurant::where('id',$request->supId)->first();
 
         if (empty($restaurant)) {
-            Flash::error('Restaurant not found');
+            Flash::error('Supérette not found');
             return redirect(route('superettes.index'));
         }
 
-        return $restaurant->active;
-        $restaurant->update([
-            'active' => !$restaurant->active
-        ]);
+        // return $restaurant->id;
+        if($restaurant->active == 0){
+            $restaurant->update([
+                'active' => 1
+            ]);
+        }else if($restaurant->active == 1){
+            $restaurant->update([
+                'active' => 0
+            ]);
+        }
+        
         return response()->json('success');
+    }
 
-        // Flash::success(__('lang.updated_successfully', ['operator' => __('lang.restaurant')]));
 
-        // return redirect(route('superettes.index'));
+    public function editClose(Request $request){
+        $restaurant = Restaurant::where('id',$request->supId)->first();
+
+        if (empty($restaurant)) {
+            Flash::error('Supérette not found');
+            return redirect(route('superettes.index'));
+        }
+        
+        $restaurant->update([
+            'closed' => !$restaurant->closed
+        ]);
+        
+        return response()->json('success');
+    }
+
+    public function editDelivery(Request $request){
+        $restaurant = Restaurant::where('id',$request->supId)->first();
+
+        if (empty($restaurant)) {
+            Flash::error('Supérette not found');
+            return redirect(route('superettes.index'));
+        }
+        
+        $restaurant->update([
+            'available_for_delivery' => !$restaurant->available_for_delivery
+        ]);
+        
+        return response()->json('success');
     }
 }

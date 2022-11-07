@@ -381,8 +381,8 @@ class OrderAPIController extends Controller
 
             // get all users of a restaurant for notifs
 
-            // Notification::send($order->foodOrders[0]->food->restaurant->users, new NewOrder($order));
-            // Notification::send($order->restaurant->users, new NewOrder($order));
+            Notification::send($order->restaurant->users, new NewOrder($order));
+            Notification::send($order->restaurant->users, new NewOrder($order));
 
 
         } catch (ValidatorException $e) {
