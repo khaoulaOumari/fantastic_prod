@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
 
+use App\Models\AnnonceFood;
+use App\Models\Food;
+
 class AnnonceController extends Controller
 {
     /** @var  AnnonceRepository */
@@ -60,11 +63,12 @@ class AnnonceController extends Controller
     {
 
         $hasCustomField = in_array($this->annonceRepository->model(), setting('custom_field_models', []));
+        $promofoods = Food::where('discount_price','!=',null)->select('id','name','discount_price')->get()->pluck('name', 'id','discount_price')->toArray();
         if ($hasCustomField) {
             $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->annonceRepository->model());
             $html = generateCustomField($customFields);
         }
-        return view('annonces.create')->with("customFields", isset($html) ? $html : false);
+        return view('annonces.create')->with('promofoods',$promofoods)->with("customFields", isset($html) ? $html : false);
     }
 
     /**

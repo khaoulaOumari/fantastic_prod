@@ -299,9 +299,6 @@ class FoodAPIController extends Controller
     public function getFoods(Request $request){
 
 
-        $order = Order::where('id',196)->with('restaurant')->first();
-        return $order;
-        return $order->restaurant->users;
         $data = Order::join('restaurants', 'orders.restaurant_id', 'restaurants.id')
         ->join("user_restaurants", "restaurants.id", "user_restaurants.restaurant_id")
         ->where('user_restaurants.user_id', 2)

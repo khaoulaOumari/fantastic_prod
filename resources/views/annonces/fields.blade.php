@@ -16,11 +16,20 @@
 <div class="form-group row ">
   {!! Form::label('type', trans("lang.annonce_type"),['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
-      {!! Form::select('type', ['1' => 'Slider','2'=> 'Pop Up','3'=> 'Vente Flash'], null, ['class' => 'select2 form-control'],['id' => 'type']) !!}
+      {!! Form::select('type', ['2'=> 'Pop Up','1' => 'Slider','3'=> 'Vente Flash'], null, ['class' => 'select2 form-control'],['id' => 'type']) !!}
     <div class="form-text text-muted">{{ trans("lang.annonce_type") }}</div>
   </div>
 </div>
 
+
+
+<div class="form-group row ">
+  {!! Form::label('foods', trans("lang.annonce_type"),['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+      {!! Form::select('foods', $promofoods, null, ['class' => 'select2 form-control']) !!}
+    <div class="form-text text-muted">{{ trans("lang.annonce_type") }}</div>
+  </div>
+</div>
 
 <div class="form-group row" id="some"  style="display:none;">
   {!! Form::label('showing', trans("lang.annonce_showing"),['class' => 'col-3 control-label text-right']) !!}
@@ -33,7 +42,7 @@
 
 
 
-<div class="form-group row">
+<div class="form-group row" id="showImage"  style="display:none;">
   {!! Form::label('image', trans("lang.annonce_image"), ['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
     <div style="width: 100%" class="dropzone image" id="image" data-field="image">
@@ -162,11 +171,30 @@
         if(value==2){
           $("#some").show();
         }else{
-          $(".some").hide();
+          $("#some").hide();
+        }
+
+
+        if(value==1 || value==3){
+          $("#showImage").hide();
+        }else{
+          $("#showImage").show();
         }
       // $(".some").hide();
       // var some = $(this).find('option:selected').val();
       }); 
+
+      // function formatState (state) {
+      //   if (!state.id) {
+      //     return state.name;
+      //   }
+      //   var baseUrl = "/user/pages/images/flags";
+      //   var $state = $(
+      //     '<span>' + state.name + state.discount_price +'</span>'
+      //   );
+      //   return $state;
+      // };
+
   </script>
 @endprepend
 </div>
