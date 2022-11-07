@@ -1,0 +1,48 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Settings;
+
+use Tests\TestCase;
+
+final class DistinctAttributeTest extends TestCase
+{
+    private $index;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->index = $this->createEmptyIndex('index');
+    }
+
+    public function testGetDefaultDistinctAttribute(): void
+    {
+        $response = $this->index->getDistinctAttribute();
+        $this->assertNull($response);
+    }
+
+    public function testUpdateDistinctAttribute(): void
+    {
+        $distinctAttribute = 'description';
+        $promise = $this->index->updateDistinctAttribute($distinctAttribute);
+
+        $this->assertIsValidPromise($promise);
+        $this->index->waitForTask($promise['uid']);
+
+        $this->assertEquals($distinctAttribute, $this->index->getDistinctAttribute());
+    }
+
+    public function testResetDistinctAttribute(): void
+    {
+        $distinctAttribute = 'description';
+        $promise = $this->index->updateDistinctAttribute($distinctAttribute);
+        $this->index->waitForTask($promise['uid']);
+
+        $promise = $this->index->resetDistinctAttribute();
+
+        $this->assertIsValidPromise($promise);
+        $this->index->waitForTask($promise['uid']);
+        $this->assertNull($this->index->getDistinctAttribute());
+    }
+}
