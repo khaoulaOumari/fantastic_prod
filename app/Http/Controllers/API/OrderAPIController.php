@@ -528,7 +528,7 @@ class OrderAPIController extends Controller
     public function cancelOrder(Request $request)
     {
         $user = auth()->user();
-        if($request->qrcode && $user){
+        if($request->order_id && $user){
             $order = Order::where('id',$request->order_id)->where('user_id',$user->id)->first();
             if (empty($order) || $order->order_status_id==5) {
                 return $this->sendError('Order not found');
