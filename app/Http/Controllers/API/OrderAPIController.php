@@ -372,8 +372,9 @@ class OrderAPIController extends Controller
             ->where('orders.id',$order->id)->first();
             $restau->is_open=$is_open;
 
-            // Notification::send($order->restaurant->users, new NewOrder($order));
-            // Notification::send($order->restaurant->users, new NewOrder($order));
+            $ord =  Order::where('id',$order->id)->first();
+            // $this->orderRepository->with('restaurant.users')->first();
+            Notification::send($ord->restaurant->users, new NewOrder($ord));
 
             \DB::commit();
             return $this->sendResponse($restau->toArray(), __('lang.saved_successfully', ['operator' => __('lang.order')]));
