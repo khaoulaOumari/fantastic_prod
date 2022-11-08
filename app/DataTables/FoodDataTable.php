@@ -244,7 +244,7 @@ class FoodDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'foodsdatatable_' . time();
+        return 'productsdatatable_' . time();
     }
 
     /**
