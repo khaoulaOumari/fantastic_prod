@@ -59,12 +59,24 @@ class UserAPIController extends Controller
             if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
                 // Authentication passed...
                 $user = auth()->user();
-                if (!$user->hasRole('manager')) {
+
+                $user = auth()->user();
+                if($user && $user->hasRole('manager')){
+                    $user->device_token = $request->input('device_token', '');
+                    $user->save();
+                    return $this->sendResponse($user, 'User retrieved successfully');    
+                }else{
                     $this->sendError('User not driver', 401);
+
                 }
-                $user->device_token = $request->input('device_token', '');
-                $user->save();
-                return $this->sendResponse($user, 'User retrieved successfully');
+
+
+                // if (!$user->hasRole('manager')) {
+                //     $this->sendError('User not driver', 401);
+                // }
+                // $user->device_token = $request->input('device_token', '');
+                // $user->save();
+                // return $this->sendResponse($user, 'User retrieved successfully');
             }
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), 401);
