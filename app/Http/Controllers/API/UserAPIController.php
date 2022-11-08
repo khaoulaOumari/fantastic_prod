@@ -50,9 +50,17 @@ class UserAPIController extends Controller
             if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
                 // Authentication passed...
                 $user = auth()->user();
-                $user->device_token = $request->input('device_token', '');
-                $user->save();
-                return $this->sendResponse($user, 'User retrieved successfully');
+                if($user && $user->hasRole('client')){
+                    $user->device_token = $request->input('device_token', '');
+                    $user->save();
+                    return $this->sendResponse($user, 'User retrieved successfully');    
+                }else{
+                    $this->sendError('User not client', 401);
+
+                }
+                // $user->device_token = $request->input('device_token', '');
+                // $user->save();
+                // return $this->sendResponse($user, 'User retrieved successfully');
             }
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), 401);

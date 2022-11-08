@@ -57,7 +57,7 @@ class UserAPIController extends Controller
                     $user->save();
                     return $this->sendResponse($user, 'User retrieved successfully');    
                 }else{
-                    $this->sendError('User not driver', 401);
+                    $this->sendError('User not manager', 401);
 
                 }
                 
