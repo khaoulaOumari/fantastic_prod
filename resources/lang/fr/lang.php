@@ -1172,6 +1172,7 @@ return [
     'annonce_image_help' => 'Image',
     'annonce_table'=>'Liste des annonces',
     'annonce_type'=>'Type',
+    'annonce_foods' => 'Les produits à afficher',
     'start_date'=>'Date début',
     'end_date'=>'Date Fin',
     'annonce_active'=>'Active',

@@ -13,28 +13,29 @@
   </div>
 </div>
 
-<div class="form-group row ">
+<div class="form-group row " >
   {!! Form::label('type', trans("lang.annonce_type"),['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
-      {!! Form::select('type', ['2'=> 'Pop Up','1' => 'Slider','3'=> 'Vente Flash'], null, ['class' => 'select2 form-control'],['id' => 'type']) !!}
+      {!! Form::select('type', ['' => 'Choisir le type ?','2'=> 'Pop Up','1' => 'Slider','3'=> 'Vente Flash'], null, ['class' => 'select2 form-control'],['id' => 'type']) !!}
     <div class="form-text text-muted">{{ trans("lang.annonce_type") }}</div>
   </div>
 </div>
 
 
 
-<div class="form-group row ">
-  {!! Form::label('foods', trans("lang.annonce_type"),['class' => 'col-3 control-label text-right']) !!}
+<div class="form-group row " id="flashAds" style="display:none;">
+  {!! Form::label('foods[]', trans("lang.annonce_foods"),['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
-      {!! Form::select('foods', $promofoods, null, ['class' => 'select2 form-control']) !!}
-    <div class="form-text text-muted">{{ trans("lang.annonce_type") }}</div>
+      {!! Form::select('foods[]', $promofoods, $promofoodselected, ['class' => 'select2 form-control templatingSelect2','multiple'=>'multiple']) !!}
+    <div class="form-text text-muted">{{ trans("lang.annonce_foods") }}</div>
   </div>
 </div>
+
 
 <div class="form-group row" id="some"  style="display:none;">
   {!! Form::label('showing', trans("lang.annonce_showing"),['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
-      {!! Form::select('showing', ['Login1' => 'Login','checkOut'=> 'checkOut','Pannier'=> 'Pannier'], null, ['class' => 'select2 form-control'],['id' => 'type']) !!}
+      {!! Form::select('showing', [''=> 'Afficher Où ?','Login' => 'Login','checkOut'=> 'checkOut','Pannier'=> 'Pannier'], null, ['class' => 'select2 form-control'],['id' => 'type']) !!}
     <div class="form-text text-muted">Moment d'affichage</div>
   </div>
 </div>
@@ -110,7 +111,7 @@
       </div>
 
 
-      <div class="form-group row ">
+        <div class="form-group row ">
             {!! Form::label('active', trans("lang.annonce_active"),['class' => 'col-3 control-label text-right']) !!}
             <div class="checkbox icheck">
                 <label class="col-9 ml-2 form-check-inline">
@@ -119,6 +120,9 @@
                 </label>
             </div>
         </div>
+
+
+    
 
 
 
@@ -166,34 +170,61 @@
     dropzoneFields['image'] = dz_var15866134771240834480ble;
 </script>
   <script type="text/javascript">
-      $('#type').on('change',function(){
-        var value = $(this).val();
+
+
+      function showHide(value){
         if(value==2){
           $("#some").show();
         }else{
           $("#some").hide();
         }
 
-
         if(value==1 || value==3){
           $("#showImage").hide();
         }else{
           $("#showImage").show();
         }
-      // $(".some").hide();
-      // var some = $(this).find('option:selected').val();
-      }); 
 
-      // function formatState (state) {
-      //   if (!state.id) {
-      //     return state.name;
-      //   }
-      //   var baseUrl = "/user/pages/images/flags";
-      //   var $state = $(
-      //     '<span>' + state.name + state.discount_price +'</span>'
-      //   );
-      //   return $state;
-      // };
+        if(value==1 || value==2){
+          $("#flashAds").hide();
+        }else{
+          $("#flashAds").show();
+        }
+      }
+       
+
+
+      $(window).on('load', function(){ 
+        var value = $("#type").val()
+        showHide(value)
+
+      });
+      
+
+      $(document).ready(function(){
+
+        $('#type').on('change',function(){
+        var value = $(this).val();
+        showHide(value)
+       
+      });
+
+        function setCurrency (currency) {
+          if (!currency.id) { return currency.name; }
+          // var $currency = $('<div class="colore" style="width:30px;height:30px;background-color:red;border: 1px solid"></div>');
+          // return $currency;
+
+          var $currency = $('<span class="glyphicon glyphicon-' + currency.element.value + '">' + currency.text + '</span>');
+		      return $currency;
+        };
+        $(".templatingSelect2").select2({
+          placeholder: "Choisir les produits à afficher?", //placeholder
+          templateResult: setCurrency,
+          templateSelection: setCurrency
+        });
+      })
+
+      
 
   </script>
 @endprepend
@@ -205,8 +236,14 @@
   {!! $customFields !!}
 </div>
 @endif
+
+
+
 <!-- Submit Field -->
 <div class="form-group col-12 text-right">
   <button type="submit" class="btn btn-{{setting('theme_color')}}" ><i class="fa fa-save"></i> {{trans('lang.save')}} {{trans('lang.annonce')}}</button>
   <a href="{!! route('annonces.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i> {{trans('lang.cancel')}}</a>
 </div>
+
+
+

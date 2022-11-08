@@ -322,25 +322,21 @@ class OrderAPIController extends Controller
                 /**  Calcul des frais de livraison */
             $fees = getDeliveryFees($order->id);
             $order->update(['delivery_fee'=>$fees]);
-
-
             $amount += $order->delivery_fee;
+
             if($request->coupon){
                 $coupon_tax=0;
                 $coupon = Coupon::where('code',$request->coupon)->where('enabled','1')->where('expires_at','>',Carbon::now())->first();
-                // if($coupon){
-                //     if($coupon->discount_type=='percent'){
-                //         $coupon_tax = 1-$coupon->discount/100
-                //     }
-                //     if($coupon->discount_type=='fixed'){
-                //         $coupon_tax =-$discount->total;
-                //             
-                //     }
-
-                    //  $order->update(['coupon_id'=>$coupon->id]);
-                // }
-
-
+                if($coupon){
+                    if($coupon->discount_type=='percent'){
+                        $amount = $amount*(1-$coupon->discount/100);
+                    }
+                    if($coupon->discount_type=='fixed'){
+                        $amount = $amount - $coupon->discount;
+                    }
+                    // $amount = $amount - $coupon_tax;
+                    $order->update(['coupon_id'=>$coupon->id]);
+                }
             }
             // $amountWithTax = $amount + ($amount * $order->tax / 100);
             $payment = $this->paymentRepository->create([

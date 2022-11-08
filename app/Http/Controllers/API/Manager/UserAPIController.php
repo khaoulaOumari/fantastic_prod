@@ -85,10 +85,13 @@ class UserAPIController extends Controller
                 'name' => 'required',
                 'email' => 'required|unique:users|email',
                 'password' => 'required',
+                'phone' => 'required',
             ]);
             $user = new User;
             $user->name = $request->input('name');
             $user->email = $request->input('email');
+            $user->phone = $request->input('phone');
+            $user->adresse = $request->input('address');
             $user->device_token = $request->input('device_token', '');
             $user->password = Hash::make($request->input('password'));
             $user->api_token = str_random(60);

@@ -138,8 +138,10 @@ class Annonce extends Model implements HasMedia
         return convertToAssoc($array,'name');
     }
 
-    public function annonceFoods()
+    public function foods()
     {
-        return $this->hasMany(\App\Models\AnnonceFood::class);
+        return $this->belongsToMany(\App\Models\Food::class,'annonce_foods');
     }
+
+    
 }

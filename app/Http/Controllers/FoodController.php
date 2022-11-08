@@ -168,7 +168,7 @@ class FoodController extends Controller
             $restaurant = $this->restaurantRepository->myRestaurants()->pluck('name', 'id');
         }
 
-        $restaurantsSelected=$food->restaurants()->pluck('restaurants.id')->toArray();;
+        $restaurantsSelected=$food->restaurants()->pluck('restaurants.id')->toArray();
 
         $customFieldsValues = $food->customFieldsValues()->with('customField')->get();
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->foodRepository->model());

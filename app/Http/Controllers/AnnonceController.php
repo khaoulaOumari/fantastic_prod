@@ -64,11 +64,13 @@ class AnnonceController extends Controller
 
         $hasCustomField = in_array($this->annonceRepository->model(), setting('custom_field_models', []));
         $promofoods = Food::where('discount_price','!=',null)->select('id','name','discount_price')->get()->pluck('name', 'id','discount_price')->toArray();
+        $promofoodselected =[];
+        // $img = Food::getMedia('images')->first()->getUrl('thumb');
         if ($hasCustomField) {
             $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->annonceRepository->model());
             $html = generateCustomField($customFields);
         }
-        return view('annonces.create')->with('promofoods',$promofoods)->with("customFields", isset($html) ? $html : false);
+        return view('annonces.create')->with('promofoods',$promofoods)->with('promofoodselected', $promofoodselected)->with("customFields", isset($html) ? $html : false);
     }
 
     /**
@@ -84,6 +86,14 @@ class AnnonceController extends Controller
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->annonceRepository->model());
         try {
             $annonce = $this->annonceRepository->create($input);
+            if(isset($input['foods']) && count($input['foods'])>0){
+                foreach($input['foods'] as $row){
+                    AnnonceFood::create([
+                        'annonce_id' => $annonce->id,
+                        'food_id' => $row
+                    ]);
+                }
+            }
             $annonce->customFieldsValues()->createMany(getCustomFieldsValues($customFields, $request));
             if (isset($input['image']) && $input['image']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image']);
@@ -137,6 +147,11 @@ class AnnonceController extends Controller
             return redirect(route('annonces.index'));
         }
         // $supcategory = $this->supannonceRepository->pluck('name', 'id');
+        $promofoods = Food::where('discount_price','!=',null)->select('id','name','discount_price')->get()->pluck('name', 'id','discount_price')->toArray();
+        $promofoodselected = $annonce->join('annonce_foods','annonces.id','annonce_foods.annonce_id')
+                                    ->join('foods','annonce_foods.food_id','foods.id')
+                                    ->pluck('foods.id','foods.name','discount_price')->toArray();
+
         $customFieldsValues = $annonce->customFieldsValues()->with('customField')->get();
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->annonceRepository->model());
         $hasCustomField = in_array($this->annonceRepository->model(), setting('custom_field_models', []));
@@ -144,7 +159,7 @@ class AnnonceController extends Controller
             $html = generateCustomField($customFields, $customFieldsValues);
         }
 
-        return view('annonces.edit')->with('annonce', $annonce)->with("customFields", isset($html) ? $html : false);
+        return view('annonces.edit')->with('annonce', $annonce)->with('promofoods', $promofoods)->with('promofoodselected', $promofoodselected)->with("customFields", isset($html) ? $html : false);
     }
 
     /**
@@ -164,9 +179,11 @@ class AnnonceController extends Controller
             return redirect(route('annonces.index'));
         }
         $input = $request->all();
+        print_r($input);exit();
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->annonceRepository->model());
         try {
             $annonce = $this->annonceRepository->update($input, $id);
+
 
             if (isset($input['image']) && $input['image']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image']);

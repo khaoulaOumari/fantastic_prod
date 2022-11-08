@@ -239,6 +239,11 @@ class Food extends Model implements HasMedia
         return $this->belongsToMany(\App\Models\Restaurant::class, 'food_restaurants');
     }
 
+    public function annonces()
+    {
+        return $this->belongsToMany(\App\Models\Annonce::class,'annonce_foods');
+    }
+
 
     
     /**

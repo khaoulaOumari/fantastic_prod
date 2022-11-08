@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Response;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Flash;
 use Carbon\Carbon;
+use App\Models\AnnonceFood;
 /**
  * Class AnnonceController
  * @package App\Http\Controllers\API
@@ -67,16 +68,17 @@ class AnnonceAPIController extends Controller
 
     public function FetchFalshAds(Request $request)
     {
-        try{
-            $this->annonceRepository->pushCriteria(new RequestCriteria($request));
-            $this->annonceRepository->pushCriteria(new LimitOffsetCriteria($request));
-        } catch (RepositoryException $e) {
-            Flash::error($e->getMessage());
-        }
+        // try{
+        //     $this->annonceRepository->pushCriteria(new RequestCriteria($request));
+        //     $this->annonceRepository->pushCriteria(new LimitOffsetCriteria($request));
+        // } catch (RepositoryException $e) {
+        //     Flash::error($e->getMessage());
+        // }
         $ads = $this->annonceRepository->where('type',3)
         ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d'))
         ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d'))
         ->where('active',1)
+        ->with('foods')
         ->get();
 
         return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
