@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
+use App\Models\Food;
 
 class FoodController extends Controller
 {
@@ -282,5 +283,21 @@ class FoodController extends Controller
         // Flash::success(__('lang.updated_successfully', ['operator' => __('lang.restaurant')]));
 
         // return redirect(route('superettes.index'));
+    }
+
+    public function getInconFood(Request $request){
+
+        // return response()->json('http://127.0.0.1:8000/storage/app/public/34/conversions/FARINE-icon.jpg');
+        if($request->foodId){
+            $food = Food::find($request->foodId);
+
+            if(empty($food)) {
+                return response()->json('no food');
+            }
+
+            $img =  $food->getFirstMediaUrl('image', 'icon');
+            return response()->json($img);
+        }
+        
     }
 }

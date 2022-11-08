@@ -190,6 +190,11 @@
         }else{
           $("#flashAds").show();
         }
+        if(!value || value==''){
+          $("#flashAds").hide();
+          $("#showImage").hide();
+          $("#some").hide();
+        }
       }
        
 
@@ -209,13 +214,26 @@
        
       });
 
-        function setCurrency (currency) {
-          if (!currency.id) { return currency.name; }
-          // var $currency = $('<div class="colore" style="width:30px;height:30px;background-color:red;border: 1px solid"></div>');
-          // return $currency;
+        function setCurrency (item) {
+          if (!item.id) { return item.text; }
 
-          var $currency = $('<span class="glyphicon glyphicon-' + currency.element.value + '">' + currency.text + '</span>');
-		      return $currency;
+          // $.ajax({
+          //   method: "GET",
+          //   url: "{{url('foods/inconFood')}}",
+          //   data: {_token: "{{csrf_token()}}", foodId: item.id},
+          //   success: function(data){
+          //     console.log(data)
+          //     // var $item = $('<span><img class="rounded" style="width:50px" src='+data.data+' > '+ item.text +'</span>');
+          //     // return $item;
+          //   }, 
+          //   error: function(){
+          //         alert("error ");
+          //   }
+          // });
+
+          // var $item = $('<span><img class="rounded" style="width:50px" src="http://127.0.0.1:8000/storage/app/public/34/conversions/FARINE-icon.jpg" > '+ item.text +'</span>');
+          var $item = $('<span class="glyphicon glyphicon-' + item.element.value + '">' + item.text +'</span>');
+		      return $item;
         };
         $(".templatingSelect2").select2({
           placeholder: "Choisir les produits à afficher?", //placeholder

@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\AnnonceFood;
 use App\Models\Food;
 
@@ -63,7 +63,10 @@ class AnnonceController extends Controller
     {
 
         $hasCustomField = in_array($this->annonceRepository->model(), setting('custom_field_models', []));
-        $promofoods = Food::where('discount_price','!=',null)->select('id','name','discount_price')->get()->pluck('name', 'id','discount_price')->toArray();
+        $promofoods = Food::where('discount_price','!=',null)
+        ->select('id','discount_price',DB::raw('CONCAT(name, " (", discount_price," Dh)") AS name'))
+        ->get()->pluck('name', 'id','discount_price')
+        ->toArray();
         $promofoodselected =[];
         // $img = Food::getMedia('images')->first()->getUrl('thumb');
         if ($hasCustomField) {
@@ -86,14 +89,14 @@ class AnnonceController extends Controller
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->annonceRepository->model());
         try {
             $annonce = $this->annonceRepository->create($input);
-            if(isset($input['foods']) && count($input['foods'])>0){
-                foreach($input['foods'] as $row){
-                    AnnonceFood::create([
-                        'annonce_id' => $annonce->id,
-                        'food_id' => $row
-                    ]);
-                }
-            }
+            // if(isset($input['foods']) && count($input['foods'])>0){
+            //     foreach($input['foods'] as $row){
+            //         AnnonceFood::create([
+            //             'annonce_id' => $annonce->id,
+            //             'food_id' => $row
+            //         ]);
+            //     }
+            // }
             $annonce->customFieldsValues()->createMany(getCustomFieldsValues($customFields, $request));
             if (isset($input['image']) && $input['image']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image']);
@@ -147,10 +150,13 @@ class AnnonceController extends Controller
             return redirect(route('annonces.index'));
         }
         // $supcategory = $this->supannonceRepository->pluck('name', 'id');
-        $promofoods = Food::where('discount_price','!=',null)->select('id','name','discount_price')->get()->pluck('name', 'id','discount_price')->toArray();
+        $promofoods = Food::where('discount_price','!=',null)
+        ->select('id',DB::raw('CONCAT(name, " (", discount_price," Dh)") AS name'))->get()->pluck('name', 'id')->toArray();
         $promofoodselected = $annonce->join('annonce_foods','annonces.id','annonce_foods.annonce_id')
                                     ->join('foods','annonce_foods.food_id','foods.id')
-                                    ->pluck('foods.id','foods.name','discount_price')->toArray();
+                                    ->select('foods.id',DB::raw('CONCAT(foods.name, " (", foods.discount_price," Dh)") AS name'))
+                                    ->pluck('id','name')
+                                    ->toArray();
 
         $customFieldsValues = $annonce->customFieldsValues()->with('customField')->get();
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->annonceRepository->model());
@@ -179,11 +185,21 @@ class AnnonceController extends Controller
             return redirect(route('annonces.index'));
         }
         $input = $request->all();
-        print_r($input);exit();
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->annonceRepository->model());
         try {
             $annonce = $this->annonceRepository->update($input, $id);
-
+            // $foods=AnnonceFood::where('annonce_id',$id)->select('food_id')->get()->pluck('food_id')->toArray();
+            // if(isset($input['foods']) && count($input['foods'])>0){
+            //     foreach($input['foods'] as $row){
+            //         if(!AnnonceFood::where('food_id',$row)->exists()){
+            //             AnnonceFood::create([
+            //                 'annonce_id' => $annonce->id,
+            //                 'food_id' => $row
+            //             ]);    
+            //         }
+                    
+            //     }
+            // }
 
             if (isset($input['image']) && $input['image']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image']);

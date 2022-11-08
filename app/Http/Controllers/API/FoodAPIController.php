@@ -299,6 +299,17 @@ class FoodAPIController extends Controller
     public function getFoods(Request $request){
 
 
+        $food = Food::find(4);
+
+            if (empty($food)) {
+                return response()->json('no food');
+            }
+
+            $img =  $food->getFirstMediaUrl('image', 'icon');
+            return response()->json(['msg'=>'success','data'=>$img]);
+        return $yourModel->getFirstMediaUrl('images', 'icon');
+        print_r(Food::where('id',26)->getFirstMediaUrl('images', 'icon'));
+        exit();
         $data = Order::join('restaurants', 'orders.restaurant_id', 'restaurants.id')
         ->join("user_restaurants", "restaurants.id", "user_restaurants.restaurant_id")
         ->where('user_restaurants.user_id', 2)

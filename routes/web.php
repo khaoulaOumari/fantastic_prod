@@ -121,6 +121,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('foods/remove-media', 'FoodController@removeMedia');
     Route::post('foods/editShow', 'FoodController@editShow');
+    Route::get('foods/inconFood', 'FoodController@getInconFood');
+
     Route::resource('foods', 'FoodController')->except([
         'show'
     ]);
