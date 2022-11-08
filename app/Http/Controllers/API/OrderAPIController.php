@@ -373,7 +373,7 @@ class OrderAPIController extends Controller
             $restau->is_open=$is_open;
 
             // Notification::send($order->restaurant->users, new NewOrder($order));
-            Notification::send($order->restaurant->users, new NewOrder($order));
+            // Notification::send($order->restaurant->users, new NewOrder($order));
 
             \DB::commit();
             return $this->sendResponse($restau->toArray(), __('lang.saved_successfully', ['operator' => __('lang.order')]));
@@ -568,7 +568,6 @@ class OrderAPIController extends Controller
 
     }
 
-
     public function countfeesOrder(){
         $settings = DB::table('app_settings')->where('key','average_price')->first();
         $fees_more = DB::table('app_settings')->where('key','more_price_fees')->first();
@@ -585,7 +584,6 @@ class OrderAPIController extends Controller
         return $this->sendResponse($fees, 'Retrieved successfully');
 
     }
-
 
     public function qrcodeOrder($id){
         $order = $this->orderRepository->findWithoutFail($id);
@@ -617,16 +615,10 @@ class OrderAPIController extends Controller
                 $order->update(['onway'=>$request->onway]);
                 return $this->sendResponse($order->toArray(), 'Retrieved successfully'); 
             }
-            
-            
         }else{
             return $this->sendError('User not found');
         }
-        
-
     }
-
-
 
     public function destroy($id)
     {
