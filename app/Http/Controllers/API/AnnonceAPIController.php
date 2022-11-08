@@ -79,7 +79,8 @@ class AnnonceAPIController extends Controller
         ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d'))
         ->where('active',1)
         ->with('foods')
-        ->get();
+        ->orderBy('created_at','desc')
+        ->first();
 
         return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
     }
