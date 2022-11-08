@@ -80,6 +80,7 @@ class AnnonceAPIController extends Controller
         ->where('active',1)
         ->with('foods')
         ->orderBy('created_at','desc')
+        ->select('id','name','type','active','start_date','end_date')
         ->first();
 
         return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
