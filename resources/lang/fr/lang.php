@@ -1133,6 +1133,7 @@ return [
     'slide_enabled_placeholder' => 'Insérer Enabled',
     'slide_updated_at' => 'Updated At',
     'app_setting_mobile_empty' => 'Section vide',
+    'app_setting_mobile_ventes_flash' => 'Section des ventes flash',
     'app_setting_mobile_search' => 'Barre de recherche avec filtre',
     'app_setting_mobile_slider' => 'Slider',
     'app_setting_mobile_top_restaurants_heading' => 'Rubrique meilleurs supérettes',
