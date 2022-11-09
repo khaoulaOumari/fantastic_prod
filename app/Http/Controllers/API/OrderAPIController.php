@@ -338,6 +338,7 @@ class OrderAPIController extends Controller
                     $order->update(['coupon_id'=>$coupon->id]);
                 }
             }
+            
             // $amountWithTax = $amount + ($amount * $order->tax / 100);
             $payment = $this->paymentRepository->create([
                 "user_id" => $input['user_id'],
@@ -346,8 +347,11 @@ class OrderAPIController extends Controller
                 "status" => 'Waiting for Client',
                 "method" => $input['payment']['method'],
             ]);
+            
 
             $this->orderRepository->update(['payment_id' => $payment->id], $order->id);
+
+            // return  $payment;
 
             if($input['latitude'] && $input['langitude']){
                 $restau = GetRestaurantOrder($input['latitude'], $input['langitude']);

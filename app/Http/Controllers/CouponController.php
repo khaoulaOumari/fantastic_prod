@@ -174,7 +174,7 @@ class CouponController extends Controller
      */
     public function edit($id)
     {
-        $this->couponRepository->pushCriteria(new CouponsOfUserCriteria(auth()->id()));
+        // $this->couponRepository->pushCriteria(new CouponsOfUserCriteria(auth()->id()));
 
         $coupon = $this->couponRepository->all()->firstWhere('id', '=', $id);
 
@@ -217,7 +217,7 @@ class CouponController extends Controller
      */
     public function update($id, UpdateCouponRequest $request)
     {
-        $this->couponRepository->pushCriteria(new CouponsOfUserCriteria(auth()->id()));
+        // $this->couponRepository->pushCriteria(new CouponsOfUserCriteria(auth()->id()));
 
         $coupon = $this->couponRepository->all()->firstWhere('id', '=', $id);
 
@@ -250,8 +250,7 @@ class CouponController extends Controller
 
 
             foreach (getCustomFieldsValues($customFields, $request) as $value) {
-                $coupon->customFieldsValues()
-                    ->updateOrCreate(['custom_field_id' => $value['custom_field_id']], $value);
+                $coupon->customFieldsValues()->updateOrCreate(['custom_field_id' => $value['custom_field_id']], $value);
             }
         } catch (ValidatorException $e) {
             Flash::error($e->getMessage());
