@@ -505,13 +505,14 @@ class OrderAPIController extends Controller
                     // Driver::where('user_id',$user->id)->update([''])
 
                     if(setting('enable_notifications', false)) {
-                            Notification::send([$order->user], new StatusChangedOrder($order));
-                            Notification::send($order->restaurant->users, new StatusChangedOrder($order));
+                            $ord =  Order::where('id',$request->id)->first();
+                            Notification::send([$ord->user], new StatusChangedOrder($ord));
+                            Notification::send($ord->restaurant->users, new StatusChangedOrder($ord));
 
-                        if ($order['driver_id']) {
+                        if ($ord['driver_id']) {
                             $driver = $this->userRepository->findWithoutFail($user->id);
                             if (!empty($driver)) {
-                                Notification::send([$driver], new StatusChangedOrder($order));
+                                Notification::send([$driver], new StatusChangedOrder($ord));
                             }
                         }
                     }
