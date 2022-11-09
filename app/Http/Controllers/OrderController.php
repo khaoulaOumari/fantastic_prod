@@ -43,6 +43,8 @@ use App\Models\OrderHistory;
 use App\Models\OrderStatus;
 use App\Models\Stock;
 use App\Models\Driver;
+use App\Models\Coupon;
+
 
 class OrderController extends Controller
 {
@@ -171,6 +173,7 @@ class OrderController extends Controller
         $this->orderRepository->pushCriteria(new OrdersOfUserCriteria(auth()->id()));
         $order = $this->orderRepository->findWithoutFail($id);
         $restaurant = $order->restaurant;
+        $coupon = $order->coupon;
         $customorders = CustomOrder::where('order_id',$id)
         ->leftjoin('foods','custom_orders.food_id','=','foods.id')
         ->select('custom_orders.*','foods.name as food_name','foods.price')
@@ -183,6 +186,7 @@ class OrderController extends Controller
             return redirect(route('orders.index'));
         }
         $subtotal = 0;
+        
 
         foreach ($order->foodOrders as $foodOrder) {
             foreach ($foodOrder->extras as $extra) {
@@ -192,12 +196,20 @@ class OrderController extends Controller
         }
 
         $total = $subtotal + $order['delivery_fee'];
+        if(!empty($coupon)){
+            if($coupon->discount_type=='percent'){
+                $total = $total*(1-$coupon->discount/100);
+            }
+            if($coupon->discount_type=='fixed'){
+                $total = $total - $coupon->discount;
+            }
+        }
         // $taxAmount = $total * $order['tax'] / 100;
         // $total += $taxAmount;
         // $total += $total;
 
         $foodOrderDataTable->id = $id;
-        return $foodOrderDataTable->render('orders.show', ["order" => $order, "total" => $total, "subtotal" => $subtotal,'customorders'=>$customorders,'FoodsOrder'=>$order->foodOrders]);
+        return $foodOrderDataTable->render('orders.show', ["order" => $order, "total" => $total, "subtotal" => $subtotal,'customorders'=>$customorders,'FoodsOrder'=>$order->foodOrders,'coupon'=>$coupon]);
 
         // return $foodOrderDataTable->render('orders.show', ["order" => $order, "total" => $total, "subtotal" => $subtotal,"taxAmount" => $taxAmount,'customorders'=>$customorders]);
     }

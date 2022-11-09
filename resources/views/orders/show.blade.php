@@ -67,6 +67,16 @@
               <th class="text-right">{{trans('lang.order_total')}}</th>
               <td>{!!getPrice($total)!!}</td>
             </tr>
+            @if($order->coupon)
+            <tr>
+              <th class="text-right">Code Coupon :</th>
+              @if($order->coupon['discount_type'] == 'fixed')
+                <td>{!! $order->coupon['code'] !!} ( {!! getPrice($order->coupon['discount']) !!} )</td>
+              @elseif($order->coupon['discount_type'] == 'percent')
+              <td>{!! $order->coupon['code'] !!} ( {!! $order->coupon['discount'] !!} % )</td>
+              @endif
+            </tr>
+            @endif
             </tbody></table>
         </div>
       </div>

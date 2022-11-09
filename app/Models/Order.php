@@ -181,6 +181,12 @@ class Order extends Model
         return $this->belongsTo(\App\Models\Payment::class, 'payment_id', 'id');
     }
 
+
+    public function coupon()
+    {
+        return $this->belongsTo(\App\Models\Coupon::class, 'coupon_id', 'id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
