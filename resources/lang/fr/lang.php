@@ -809,7 +809,7 @@ return [
     'restaurant_name' => 'Nom',
     'restaurant_name_help' => 'Insérer le nom',
     'restaurant_name_placeholder' => 'Insérer le nom',
-    'restaurant_phone' => 'Téléphone',
+    'restaurant_phone' => 'Téléphone du supérette',
     'restaurant_phone_help' => 'Ajouter Téléphone',
     'restaurant_phone_placeholder' => 'Ajouter Téléphone',
     'restaurant_plural' => 'Supérettes',

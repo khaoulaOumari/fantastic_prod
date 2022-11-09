@@ -82,23 +82,15 @@ class DashboardController extends Controller
 
 
 
+        $profit_data = Food::join('food_orders','foods.id','food_orders.food_id')->join('orders','food_orders.order_id','orders.id')
+        ->select('food_orders.order_id',DB::raw("(SUM((food_orders.price - foods.prix_achat)*food_orders.quantity))+(orders.delivery_fee - orders.driver_fee) as profit"))
+        ->where('orders.order_status_id',5)
+        ->groupBy('food_orders.order_id')
+        ->get()->pluck('profit')->toArray();
+        $profit =  array_sum($profit_data);
+
+
        
-
-
-        // $orders = Order::where('order_status_id',5)
-        // ->select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
-        // ->whereYear('created_at', date('Y'))
-        // ->groupBy(DB::raw("Month(created_at)"))
-        // ->pluck('count', 'month_name');
-
-        // $labels = $orders->keys();
-        // $data = $orders->values();
-        
-
-        
-
-
-        // Map Locations
         
         return view('dashboard.index')
             ->with("ajaxEarningUrl", $ajaxEarningUrl)
@@ -111,7 +103,8 @@ class DashboardController extends Controller
             ->with("weekProducts", $products)
             ->with("claims", $claims)
             ->with("categories", $categories)
-            ->with("sub_categories", $sub_categories);
+            ->with("sub_categories", $sub_categories)
+            ->with("profit", $profit);
     }
 
 

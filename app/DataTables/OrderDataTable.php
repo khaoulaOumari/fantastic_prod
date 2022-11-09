@@ -58,9 +58,16 @@ class OrderDataTable extends DataTable
                     }
                     
                 }
-                return "<select class='select2 form-control' onchange='status_select(".$order->id.")' name='status_select' id='[status_select".$order->id."]'>
-                ".$txt."
-                </select>";
+                if($order->order_status_id ==5){
+                    return "<select disabled class='select2 form-control' onchange='status_select(".$order->id.")' name='status_select' id='[status_select".$order->id."]'>
+                    ".$txt."
+                    </select>";    
+                }else{
+                    return "<select class='select2 form-control' onchange='status_select(".$order->id.")' name='status_select' id='[status_select".$order->id."]'>
+                    ".$txt."
+                    </select>";
+                }
+                
             })
             ->editColumn('payment.status', function ($order) {
                 return getPayment($order->payment,'status');

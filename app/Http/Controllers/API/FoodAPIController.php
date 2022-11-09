@@ -16,6 +16,7 @@ use App\Criteria\Foods\FoodsOfCuisinesCriteria;
 use App\Criteria\Foods\TrendingWeekCriteria;
 use App\Http\Controllers\Controller;
 use App\Models\Food;
+use App\Models\FoodOrder;
 use App\Repositories\CustomFieldRepository;
 use App\Repositories\FoodRepository;
 use App\Repositories\UploadRepository;
@@ -299,14 +300,17 @@ class FoodAPIController extends Controller
     public function getFoods(Request $request){
 
 
-        $food = Food::find(4);
+        $data = Food::join('food_orders','foods.id','food_orders.food_id')->join('orders','food_orders.order_id','orders.id')
+        ->select('food_orders.order_id',DB::raw("(SUM((food_orders.price - foods.prix_achat)*food_orders.quantity))+(orders.delivery_fee - orders.driver_fee) as profit"))
+        ->where('orders.order_status_id',5)
+        ->groupBy('food_orders.order_id')
+        ->get()->pluck('profit')->toArray();
+        return array_sum($data);
+        // $data = Food::join('food_orders','foods.id','food_orders.food_id')
+        // ->join('orders','food_orders.order_id','orders.id')
+        // ->sum(DB::raw("(SUM((food_orders.price - foods.prix_achat)*food_orders.quantity))+(orders.delivery_fee - orders.driver_fee) as profit"));
 
-            if (empty($food)) {
-                return response()->json('no food');
-            }
-
-            $img =  $food->getFirstMediaUrl('image', 'icon');
-            return response()->json(['msg'=>'success','data'=>$img]);
+        return $data;
         return $yourModel->getFirstMediaUrl('images', 'icon');
         print_r(Food::where('id',26)->getFirstMediaUrl('images', 'icon'));
         exit();

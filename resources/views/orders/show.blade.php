@@ -41,9 +41,9 @@
 
     @if($order['qrcode'])
     <div style="float: right;">
-      {!! QrCode::size(200)->generate($order['qrcode']) !!}
+      {!! QrCode::size(200)->generate($order['qrcode']) !!}<br/>
+      <h3>{!! $order->qrcode !!}</h3>
     </div>
-
     @endif
     
       <div class="row">

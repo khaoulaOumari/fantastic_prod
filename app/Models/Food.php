@@ -64,6 +64,7 @@ class Food extends Model implements HasMedia
     public static $rules = [
         'name' => 'required',
         'price' => 'required|numeric|min:0',
+        'prix_achat' => 'required|numeric|min:0',
         // 'restaurant_id' => 'required|exists:restaurants,id',
         'category_id' => 'required|exists:categories,id'
     ];

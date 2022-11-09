@@ -1,7 +1,7 @@
 @if($customFields)
 <h5 class="col-12 pb-4">{!! trans('lang.main_fields') !!}</h5>
 @endif
-<div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
+<div style="flex: 100%;max-width: 100%;padding: 0 4px;" class="column">
 <!-- Code Field -->
 <div class="form-group row ">
   {!! Form::label('code', trans("lang.coupon_code"), ['class' => 'col-3 control-label text-right']) !!}
@@ -49,50 +49,6 @@
   </div>
 </div>
 
-</div>
-<div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
-
-  <!-- Food Id Field -->
-  <div class="form-group row ">
-    {!! Form::label('foods[]', trans("lang.coupon_food_id"),['class' => 'col-3 control-label text-right']) !!}
-    <div class="col-9">
-      {!! Form::select('foods[]', $food, $foodsSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}
-      <div class="form-text text-muted">{{ trans("lang.coupon_food_id_help") }}</div>
-    </div>
-  </div>
-
-<!-- Restaurant Id Field -->
-<div class="form-group row ">
-  {!! Form::label('restaurants', trans("lang.coupon_restaurant_id"),['class' => 'col-3 control-label text-right']) !!}
-  <div class="col-9">
-    {!! Form::select('restaurants[]', $restaurant, $restaurantsSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}
-    <div class="form-text text-muted">{{ trans("lang.coupon_restaurant_id_help") }}</div>
-  </div>
-</div>
-
-
-<!-- Category Id Field -->
-<div class="form-group row ">
-  {!! Form::label('categories[]', trans("lang.coupon_category_id"),['class' => 'col-3 control-label text-right']) !!}
-  <div class="col-9">
-    {!! Form::select('categories[]', $category, $categoriesSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}
-    <div class="form-text text-muted">{{ trans("lang.coupon_category_id_help") }}</div>
-  </div>
-</div>
-
-
-<!-- Expires At Field -->
-<div class="form-group row ">
-  {!! Form::label('expires_at', trans("lang.coupon_expires_at"), ['class' => 'col-3 control-label text-right']) !!}
-  <div class="col-9">
-      {!! Form::text('expires_at', null,  ['class' => 'form-control datepicker','autocomplete'=>'off','placeholder'=>  trans("lang.coupon_expires_at_placeholder")  ]) !!}
-    <div class="form-text text-muted">
-      {{ trans("lang.coupon_expires_at_help") }}
-    </div>
-  </div>
-</div>
-
-<!-- 'Boolean Enabled Field' -->
 <div class="form-group row">
   {!! Form::label('enabled', trans("lang.coupon_enabled"),['class' => 'col-3 control-label text-right']) !!}
   {!! Form::hidden('enabled', 0, ['id'=>"hidden_enabled"]) !!}
@@ -103,6 +59,50 @@
 </div>
 
 </div>
+<!-- <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column"> -->
+
+  <!-- Food Id Field -->
+  <!-- <div class="form-group row ">
+    {!! Form::label('foods[]', trans("lang.coupon_food_id"),['class' => 'col-3 control-label text-right']) !!}
+    <div class="col-9">
+      {!! Form::select('foods[]', $food, $foodsSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}
+      <div class="form-text text-muted">{{ trans("lang.coupon_food_id_help") }}</div>
+    </div>
+  </div> -->
+
+<!-- Restaurant Id Field -->
+<!-- <div class="form-group row ">
+  {!! Form::label('restaurants', trans("lang.coupon_restaurant_id"),['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::select('restaurants[]', $restaurant, $restaurantsSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}
+    <div class="form-text text-muted">{{ trans("lang.coupon_restaurant_id_help") }}</div>
+  </div>
+</div> -->
+
+
+<!-- <div class="form-group row ">
+  {!! Form::label('categories[]', trans("lang.coupon_category_id"),['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::select('categories[]', $category, $categoriesSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}
+    <div class="form-text text-muted">{{ trans("lang.coupon_category_id_help") }}</div>
+  </div>
+</div>
+
+
+<div class="form-group row ">
+  {!! Form::label('expires_at', trans("lang.coupon_expires_at"), ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+      {!! Form::text('expires_at', null,  ['class' => 'form-control datepicker','autocomplete'=>'off','placeholder'=>  trans("lang.coupon_expires_at_placeholder")  ]) !!}
+    <div class="form-text text-muted">
+      {{ trans("lang.coupon_expires_at_help") }}
+    </div>
+  </div>
+</div> -->
+
+<!-- 'Boolean Enabled Field' -->
+
+
+<!-- </div> -->
 @if($customFields)
 <div class="clearfix"></div>
 <div class="col-12 custom-field-container">
