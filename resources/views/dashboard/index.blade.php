@@ -23,17 +23,16 @@
 
             <div class="col-12">
                 <!-- small box -->
-                <div class="small-box bg-primary">
+                <div class="small-box bg-primary" style="background-color: #D231EC!important;">
                     <div class="inner">
                         <h3>{{$profit}}</h3>
 
                         <p>{{trans('lang.dashboard_total_earnings')}}</p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-medal"></i>
+                        <i class="fa fa-dollar"></i>
                     </div>
-                    <a href="{!! route('orders.index') !!}" class="small-box-footer">{{trans('lang.dashboard_more_info')}}
-                        <i class="fa fa-arrow-circle-right"></i></a>
+                    
                 </div>
             </div>
             <div class="col-lg-3 col-6">

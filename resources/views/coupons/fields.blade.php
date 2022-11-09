@@ -6,14 +6,10 @@
 <div class="form-group row ">
   {!! Form::label('code', trans("lang.coupon_code"), ['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
-    @if(isset($coupon['code']))
-      <p>{!! $coupon->code !!}</p>
-    @else
       {!! Form::text('code', null,  ['class' => 'form-control','placeholder'=>  trans("lang.coupon_code_placeholder")]) !!}
       <div class="form-text text-muted">
         {{ trans("lang.coupon_code_help") }}
       </div>
-      @endif
   </div>
 </div>
 
@@ -46,6 +42,16 @@
     {!! Form::textarea('description', null, ['class' => 'form-control','placeholder'=>
      trans("lang.coupon_description_placeholder")  ]) !!}
     <div class="form-text text-muted">{{ trans("lang.coupon_description_help") }}</div>
+  </div>
+</div>
+
+<div class="form-group row ">
+  {!! Form::label('expires_at', trans("lang.coupon_expires_at"), ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+      {!! Form::text('expires_at', null,  ['class' => 'form-control datepicker','autocomplete'=>'off','placeholder'=>  trans("lang.coupon_expires_at_placeholder")  ]) !!}
+    <div class="form-text text-muted">
+      {{ trans("lang.coupon_expires_at_help") }}
+    </div>
   </div>
 </div>
 

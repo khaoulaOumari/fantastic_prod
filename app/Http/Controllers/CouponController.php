@@ -229,24 +229,24 @@ class CouponController extends Controller
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->couponRepository->model());
         try {
             $coupon = $this->couponRepository->update($input, $id);
-            $discountables = [];
-            if(isset($input['foods'])){
-                foreach ($input['foods'] as $foodId){
-                    $discountables[] = ["discountable_type"=>"App\Models\Food","discountable_id"=>$foodId];
-                }
-            }
-            if(isset($input['restaurants'])){
-                foreach ($input['restaurants'] as $restaurantId){
-                    $discountables[] = ["discountable_type"=>"App\Models\Restaurant","discountable_id"=>$restaurantId];
-                }
-            }
-            if(isset($input['categories'])){
-                foreach ($input['categories'] as $categoryId){
-                    $discountables[] = ["discountable_type"=>"App\Models\Category","discountable_id"=>$categoryId];
-                }
-            }
-            $coupon->discountables()->delete();
-            $coupon->discountables()->createMany($discountables);
+            // $discountables = [];
+            // if(isset($input['foods'])){
+            //     foreach ($input['foods'] as $foodId){
+            //         $discountables[] = ["discountable_type"=>"App\Models\Food","discountable_id"=>$foodId];
+            //     }
+            // }
+            // if(isset($input['restaurants'])){
+            //     foreach ($input['restaurants'] as $restaurantId){
+            //         $discountables[] = ["discountable_type"=>"App\Models\Restaurant","discountable_id"=>$restaurantId];
+            //     }
+            // }
+            // if(isset($input['categories'])){
+            //     foreach ($input['categories'] as $categoryId){
+            //         $discountables[] = ["discountable_type"=>"App\Models\Category","discountable_id"=>$categoryId];
+            //     }
+            // }
+            // $coupon->discountables()->delete();
+            // $coupon->discountables()->createMany($discountables);
 
 
             foreach (getCustomFieldsValues($customFields, $request) as $value) {
