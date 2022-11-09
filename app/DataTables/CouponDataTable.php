@@ -114,19 +114,22 @@ class CouponDataTable extends DataTable
         if (auth()->user()->hasRole('admin')) {
             return $model->newQuery();
         }elseif (auth()->user()->hasRole('manager')){
-            $restaurants = $model->join("discountables", "discountables.coupon_id", "=", "coupons.id")
-                ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "discountables.discountable_id")
-                ->where('discountable_type','App\\Models\\Restaurant')
-                ->where("user_restaurants.user_id",auth()->id())->select("coupons.*");
+            // $restaurants = $model->join("discountables", "discountables.coupon_id", "=", "coupons.id")
+            //     ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "discountables.discountable_id")
+            //     ->where('discountable_type','App\\Models\\Restaurant')
+            //     ->where("user_restaurants.user_id",auth()->id())
+            //     ->select("coupons.*");
 
-            $foods = $model->join("discountables", "discountables.coupon_id", "=", "coupons.id")
-                ->join("foods", "foods.id", "=", "discountables.discountable_id")
-                ->where('discountable_type','App\\Models\\Food')
-                ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "foods.restaurant_id")
-                ->where("user_restaurants.user_id",auth()->id())
-                ->select("coupons.*")
-                ->union($restaurants);
-            return $foods;
+            return $model->newQuery();
+
+            // $foods = $model->join("discountables", "discountables.coupon_id", "=", "coupons.id")
+            //     ->join("foods", "foods.id", "=", "discountables.discountable_id")
+            //     ->where('discountable_type','App\\Models\\Food')
+            //     ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "foods.restaurant_id")
+            //     ->where("user_restaurants.user_id",auth()->id())
+            //     ->select("coupons.*")
+            //     ->union($restaurants);
+            // return $foods;
         }else{
             $model->newQuery();
         }

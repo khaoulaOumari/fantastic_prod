@@ -79,6 +79,7 @@ class CouponAPIController extends Controller
         if($request->coupon){
             $coupon =  $this->couponRepository->where('code',$request->coupon)->where('enabled','1')->where('expires_at','>',Carbon::now())->with('discountables')->first();
             if($coupon){
+                $coupon->valid = true;
                 return $this->sendResponse($coupon->toArray(), 'Coupon retrieved successfully');
             }else{
                 return $this->sendError('Coupon not found');
