@@ -77,7 +77,7 @@ class CouponAPIController extends Controller
 
     public function checkCoupon(Request $request){
         if($request->coupon){
-            $coupon =  $this->couponRepository->where('code',$request->coupon)->where('enabled','1')->where('expires_at','>',Carbon::now())->first();
+            $coupon =  $this->couponRepository->where('code',$request->coupon)->where('enabled','1')->where('expires_at','>',Carbon::now())->with('discountables')->first();
             if($coupon){
                 return $this->sendResponse($coupon->toArray(), 'Coupon retrieved successfully');
             }else{
