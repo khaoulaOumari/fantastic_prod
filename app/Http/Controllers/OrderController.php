@@ -480,10 +480,10 @@ class OrderController extends Controller
                     }
 
                     if (setting('enable_notifications', false)) {
-                        // $ord =  Order::where('id',$request->id)->first();
+                        $ord =  Order::where('id',$request->id)->first();
                         if ($request->statut && $request->order_status_id != $old_status_id) {
-                            Notification::send([$order->user], new StatusChangedOrder($order));
-                            Notification::send($order->restaurant->users, new StatusChangedOrder($order));
+                            Notification::send([$ord->user], new StatusChangedOrder($ord));
+                            Notification::send($ord->restaurant->users, new StatusChangedOrder($ord));
                         }
         
                         
