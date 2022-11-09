@@ -152,7 +152,7 @@ class OrderAPIController extends Controller
             } catch (RepositoryException $e) {
                 return $this->sendError($e->getMessage());
             }
-            $order = $this->orderRepository->with('customOrders')->findWithoutFail($id);
+            $order = $this->orderRepository->with('customOrders')->with('coupon')->findWithoutFail($id);
             if($order->driver_id){
                 $driver = 
                 // User::join('drivers','users.id','drivers.user_id')
