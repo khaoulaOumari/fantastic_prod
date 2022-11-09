@@ -13,6 +13,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Illuminate\Support\Facades\Response;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Flash;
+use Carbon\Carbon;
 
 /**
  * Class CouponController
@@ -70,5 +71,18 @@ class CouponAPIController extends Controller
         }
 
         return $this->sendResponse($coupon->toArray(), 'Coupon retrieved successfully');
+    }
+
+
+
+    public function checkCoupon(Request $request){
+        if($request->coupon){
+            $coupon = Coupon::where('code',$request->coupon)->where('enabled','1')->where('expires_at','>',Carbon::now())->first();
+            if($coupon){
+                return $this->sendResponse($coupon->toArray(), 'Coupon retrieved successfully');
+            }else{
+                return $this->sendError('Coupon not found');
+            }
+        }
     }
 }

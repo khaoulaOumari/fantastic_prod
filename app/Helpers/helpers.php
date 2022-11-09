@@ -861,7 +861,6 @@ function distance($latitude1, $longitude1, $latitude2, $longitude2) {
                     $fees_row = DB::table('app_settings')->where('key','less_price_fees')->first();
                     $fees = (float)$fees_row->value;
                 }
-                
             }
             return $fees;    
         }

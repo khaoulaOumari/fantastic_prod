@@ -157,6 +157,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('coupons', 'API\CouponAPIController')->except([
         'show'
     ]);
+    
+    Route::post('coupons/checkCoupon', 'API\CouponAPIController@checkCoupon');
 
     Route::get('fetch_claims', 'API\ClaimAPIController@index');
     Route::post('new_claims', 'API\ClaimAPIController@create');
