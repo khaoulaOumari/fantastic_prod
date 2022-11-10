@@ -220,7 +220,7 @@
     width: 0;
     transition: width 300ms ease-in-out; }
 .dropzone .dz-preview.dz-error .dz-error-message {
-    display: block; }
+    display: none; }
 .dropzone .dz-preview.dz-error:hover .dz-error-message {
     opacity: 1;
     pointer-events: auto; }
@@ -228,7 +228,7 @@
     pointer-events: none;
     z-index: 1000;
     position: absolute;
-    display: block;
+    /* display: block; */
     display: none;
     top: 8rem;
     left: -.5rem;

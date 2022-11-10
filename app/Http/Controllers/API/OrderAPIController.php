@@ -380,9 +380,6 @@ class OrderAPIController extends Controller
             return $this->sendResponse($restau->toArray(), __('lang.saved_successfully', ['operator' => __('lang.order')]));
             // $order= $order->with('restaurant');
             
-            
-            
-
             // get all users of a restaurant for notifs
 
             
