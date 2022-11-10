@@ -84,6 +84,10 @@ Route::resource('slides', 'API\SlideAPIController')->except([
 ]);
 Route::get('PopupAds', 'API\AnnonceAPIController@FetchPopAds');
 Route::get('FalshAds', 'API\AnnonceAPIController@FetchFalshAds');
+Route::get('loginAds', 'API\AnnonceAPIController@loginAds');
+Route::get('checkOutAds', 'API\AnnonceAPIController@checkOutAds');
+Route::get('cartAds', 'API\AnnonceAPIController@cartAds');
+
 Route::get('orders/fees_order/{id}', 'API\OrderAPIController@feesOrder');
 Route::get('orders/order_fees', 'API\OrderAPIController@countfeesOrder');
 

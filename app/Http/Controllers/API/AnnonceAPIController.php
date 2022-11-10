@@ -66,6 +66,59 @@ class AnnonceAPIController extends Controller
         return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
     }
 
+    public function loginAds(Request $request)
+    {
+        try{
+            $this->annonceRepository->pushCriteria(new RequestCriteria($request));
+            $this->annonceRepository->pushCriteria(new LimitOffsetCriteria($request));
+        } catch (RepositoryException $e) {
+            Flash::error($e->getMessage());
+        }
+        $ads = $this->annonceRepository->where('type',2)
+        ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d'))
+        ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d'))
+        ->where('active',1)
+        ->where('showing','Login')
+        ->first();
+
+        return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
+    }
+    public function checkOutAds(Request $request)
+    {
+        try{
+            $this->annonceRepository->pushCriteria(new RequestCriteria($request));
+            $this->annonceRepository->pushCriteria(new LimitOffsetCriteria($request));
+        } catch (RepositoryException $e) {
+            Flash::error($e->getMessage());
+        }
+        $ads = $this->annonceRepository->where('type',2)
+        ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d'))
+        ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d'))
+        ->where('active',1)
+        ->where('showing','checkOut')
+        ->first();
+
+        return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
+    }
+
+    public function cartAds(Request $request)
+    {
+        try{
+            $this->annonceRepository->pushCriteria(new RequestCriteria($request));
+            $this->annonceRepository->pushCriteria(new LimitOffsetCriteria($request));
+        } catch (RepositoryException $e) {
+            Flash::error($e->getMessage());
+        }
+        $ads = $this->annonceRepository->where('type',2)
+        ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d'))
+        ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d'))
+        ->where('active',1)
+        ->where('showing','Pannier')
+        ->first();
+
+        return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
+    }
+
     public function FetchFalshAds(Request $request)
     {
         // try{
