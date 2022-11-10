@@ -63,6 +63,9 @@ class UserAPIController extends Controller
                 $user = auth()->user();
                 if($user && $user->hasRole('manager')){
                     $user->device_token = $request->input('device_token', '');
+                    if(empty($user->api_token) || !$user->api_token){
+                        $user->api_token = str_random(60);
+                    }
                     $user->save();
                     return $this->sendResponse($user, 'User retrieved successfully');    
                 }else{
