@@ -369,7 +369,7 @@ class OrderAPIController extends Controller
             
             $restau = Order::join('restaurants','orders.restaurant_id','restaurants.id')
             ->select('orders.*','restaurants.start_date','restaurants.end_date')
-            ->where('orders.id',$order->id)->with('payment')->first();
+            ->where('orders.id',$order->id)->with('payment')->with('coupon')->first();
             $restau->is_open=$is_open;
 
             $ord =  Order::where('id',$order->id)->first();
