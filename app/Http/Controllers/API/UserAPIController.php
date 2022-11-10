@@ -224,7 +224,7 @@ class UserAPIController extends Controller
         $this->validate($request, ['email' => 'required|email']);
 
         $response = Password::broker()->sendResetLink(
-            $request->only('email')
+            $request->only(['email'])
         );
 
         if ($response == Password::RESET_LINK_SENT) {
