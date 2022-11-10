@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Support\Facades\DB;
+use App\Models\Annonce;
 use App\Models\AnnonceFood;
 use App\Models\Food;
 
@@ -88,7 +89,7 @@ class AnnonceController extends Controller
         $input = $request->all();
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->annonceRepository->model());
         try {
-            $annonce = $this->annonceRepository->create($input);
+            // $annonce = $this->annonceRepository->create($input);
             // if(isset($input['foods']) && count($input['foods'])>0){
             //     foreach($input['foods'] as $row){
             //         AnnonceFood::create([
@@ -97,6 +98,15 @@ class AnnonceController extends Controller
             //         ]);
             //     }
             // }
+            $annonce = new Annonce();
+            $annonce->name = $input['name'];
+            $annonce->type = $input['type'];
+            $annonce->active = $input['active'];
+            $annonce->start_date = $input['start_date'];
+            $annonce->end_date = $input['end_date'];
+            $annonce->showing = $input['showing'];
+            $annonce->save();
+
             $annonce->customFieldsValues()->createMany(getCustomFieldsValues($customFields, $request));
             if (isset($input['image']) && $input['image']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image']);

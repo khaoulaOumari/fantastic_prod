@@ -61,6 +61,7 @@ class AnnonceAPIController extends Controller
         ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d'))
         ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d'))
         ->where('active',1)
+        ->orderBy('created_at','desc')
         ->get();
 
         return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
@@ -79,6 +80,7 @@ class AnnonceAPIController extends Controller
         ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d'))
         ->where('active',1)
         ->where('showing','Login')
+        ->orderBy('created_at','desc')
         ->first();
 
         return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
@@ -96,9 +98,10 @@ class AnnonceAPIController extends Controller
         ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d'))
         ->where('active',1)
         ->where('showing','checkOut')
+        ->orderBy('created_at','desc')
         ->first();
 
-        return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
+        return $this->sendResponse($ads, 'ads retrieved successfully');
     }
 
     public function cartAds(Request $request)
@@ -114,9 +117,10 @@ class AnnonceAPIController extends Controller
         ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d'))
         ->where('active',1)
         ->where('showing','Pannier')
+        ->orderBy('created_at','desc')
         ->first();
 
-        return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
+        return $this->sendResponse($ads, 'ads retrieved successfully');
     }
 
     public function FetchFalshAds(Request $request)
@@ -136,7 +140,7 @@ class AnnonceAPIController extends Controller
         ->select('id','name','type','active','start_date','end_date')
         ->first();
 
-        return $this->sendResponse($ads->toArray(), 'ads retrieved successfully');
+        return $this->sendResponse($ads, 'ads retrieved successfully');
     }
 
     /**
