@@ -28,7 +28,8 @@ class NotificationDataTable extends DataTable
         $columns = array_column($this->getColumns(), 'data');
         $dataTable = $dataTable
             ->editColumn('type', function ($notification) {
-                return  ('lang.' . preg_replace(['/App\\\/', '/\\\/'], ['', '_'], $notification->type));
+                return  trans('lang.' . preg_replace(['/App\\\/', '/\\\/'], ['', '_'], $notification->type));
+                // return   trans('lang.'$notification->type;
             })
             ->editColumn('updated_at', function ($notification) {
                 return getDateColumn($notification, 'updated_at');
