@@ -57,7 +57,7 @@ class NewOrder extends Notification
     {
         $message = new FcmMessage();
         $notification = [
-            'title'        => "New Order #".$this->order->id." to ".$this->order->restaurant->name,
+            'title'        => "Nouvelle commande #".$this->order->id." à ".$this->order->restaurant->name,
             'body'         => $this->order->user->name,
             'icon'         => $this->order->restaurant->getFirstMediaUrl('image', 'thumb'),
             'click_action' => "FLUTTER_NOTIFICATION_CLICK",
