@@ -878,3 +878,7 @@ function distance($latitude1, $longitude1, $latitude2, $longitude2) {
         
         return $qrcode;
     }
+
+    function notifData($data){
+        return json_decode($data, true);
+    }
