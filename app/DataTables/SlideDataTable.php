@@ -50,36 +50,36 @@ class SlideDataTable extends DataTable
     protected function getColumns()
     {
         $columns = [
-            [
-                'data' => 'order',
-                'title' => trans('lang.slide_order'),
+            // [
+            //     'data' => 'order',
+            //     'title' => trans('lang.slide_order'),
 
-            ],
+            // ],
             [
                 'data' => 'text',
                 'title' => trans('lang.slide_text'),
 
             ],
-            [
-                'data' => 'button',
-                'title' => trans('lang.slide_button'),
+            // [
+            //     'data' => 'button',
+            //     'title' => trans('lang.slide_button'),
 
-            ],
+            // ],
             [
                 'data' => 'image',
                 'title' => trans('lang.slide_image'),
                 'searchable' => false, 'orderable' => false, 'exportable' => false, 'printable' => false,
             ],
-            [
-                'data' => 'food.name',
-                'title' => trans('lang.slide_food_id'),
+            // [
+            //     'data' => 'food.name',
+            //     'title' => trans('lang.slide_food_id'),
 
-            ],
-            [
-                'data' => 'restaurant.name',
-                'title' => trans('lang.slide_restaurant_id'),
+            // ],
+            // [
+            //     'data' => 'restaurant.name',
+            //     'title' => trans('lang.slide_restaurant_id'),
 
-            ],
+            // ],
             [
                 'data' => 'enabled',
                 'title' => trans('lang.slide_enabled'),
