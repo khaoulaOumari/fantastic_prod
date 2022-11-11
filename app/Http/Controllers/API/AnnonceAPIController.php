@@ -58,8 +58,8 @@ class AnnonceAPIController extends Controller
             Flash::error($e->getMessage());
         }
         $ads = $this->annonceRepository->where('type',2)
-        ->whereDate('start_date', '<=',Carbon::now()->timestamp)
-        ->whereDate('end_date', '>=',Carbon::now()->timestamp)
+        ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d H:i:s'))
+        ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d H:i:s'))
         ->where('active',1)
         ->orderBy('created_at','desc')
         ->get();
@@ -76,8 +76,8 @@ class AnnonceAPIController extends Controller
             Flash::error($e->getMessage());
         }
         $ads = $this->annonceRepository->where('type',2)
-        ->whereDate('start_date', '<=',Carbon::now()->timestamp)
-        ->whereDate('end_date', '>=',Carbon::now()->timestamp)
+        ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d H:i:s'))
+        ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d H:i:s'))
         ->where('active',1)
         ->where('showing','Login')
         ->orderBy('created_at','desc')
@@ -94,8 +94,8 @@ class AnnonceAPIController extends Controller
             Flash::error($e->getMessage());
         }
         $ads = $this->annonceRepository->where('type',2)
-        ->whereDate('start_date', '<=',Carbon::now()->timestamp)
-        ->whereDate('end_date', '>=',Carbon::now()->timestamp)
+        ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d H:i:s'))
+        ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d H:i:s'))
         ->where('active',1)
         ->where('showing','checkOut')
         ->orderBy('created_at','desc')
@@ -113,8 +113,8 @@ class AnnonceAPIController extends Controller
             Flash::error($e->getMessage());
         }
         $ads = $this->annonceRepository->where('type',2)
-        ->whereDate('start_date', '<=',Carbon::now()->timestamp)
-        ->whereDate('end_date', '>=',Carbon::now()->timestamp)
+        ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d H:i:s'))
+        ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d H:i:s'))
         ->where('active',1)
         ->where('showing','Pannier')
         ->orderBy('created_at','desc')
@@ -132,8 +132,8 @@ class AnnonceAPIController extends Controller
         //     Flash::error($e->getMessage());
         // }
         $ads = $this->annonceRepository->where('type',3)
-        ->whereDate('start_date', '<=',Carbon::now()->timestamp)
-        ->whereDate('end_date', '>=',Carbon::now()->timestamp)
+        ->whereDate('start_date', '<=',Carbon::now()->format('Y-m-d H:i:s'))
+        ->whereDate('end_date', '>=',Carbon::now()->format('Y-m-d H:i:s'))
         ->where('active',1)
         ->with('foods')
         ->orderBy('created_at','desc')
