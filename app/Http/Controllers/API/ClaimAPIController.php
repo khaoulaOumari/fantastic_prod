@@ -106,4 +106,25 @@ class ClaimAPIController extends Controller
         return $this->sendResponse($data->toArray(), 'claims retrieved successfully');
     }
 
+
+    // public function fetchManagerClaim(Request $request){
+        
+    //     $user = auth()->user();
+
+    //     if(!$user || !auth()->user()->hasRole('client')){
+    //         return $this->sendError('user not found');
+    //     }
+
+    //     // ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "orders.restaurant_id")
+    //     // ->where('user_restaurants.user_id', $this->userId)
+
+    //     $data = SubClaimOrder::join('orders','sub_claims_orders.order_id','orders.id')
+    //     ->join('sub_claims','sub_claims_orders.sub_claim_id','sub_claims.id')
+    //     ->where('orders.user_id',$user->id)
+    //     ->select('sub_claims_orders.id','sub_claims.text','sub_claims.claim_id','sub_claims_orders.created_at','orders.id as order_id')
+    //     ->get();
+
+    //     return $this->sendResponse($data->toArray(), 'claims retrieved successfully');
+    // }
+
 }

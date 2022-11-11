@@ -221,6 +221,9 @@ class AnnonceController extends Controller
                 return redirect(route('annonces.index'));
             }else{
                 $annonce = $this->annonceRepository->update($input, $id);
+                $annonce->start_date = $input['start_date'];
+                $annonce->end_date = $input['end_date'];
+                $annonce->save();
                 if (isset($input['image']) && $input['image']) {
                     $cacheUpload = $this->uploadRepository->getByUuid($input['image']);
                     $mediaItem = $cacheUpload->getMedia('image')->first();
@@ -273,7 +276,7 @@ class AnnonceController extends Controller
         $input = $request->all();
         $annonce = $this->annonceRepository->findWithoutFail($input['id']);
         try {
-            if ($annonce->hasMedia($input['collection'])) {
+            if($annonce->hasMedia($input['collection'])) {
                 $annonce->getFirstMedia($input['collection'])->delete();
             }
         } catch (\Exception $e) {

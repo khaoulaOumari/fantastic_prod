@@ -52,8 +52,8 @@ class Annonce extends Model implements HasMedia
         'name' => 'string',
         'text' => 'string',
         'type' => 'integer',
-        'start_date' => 'date',
-        'end_date' => 'date',
+        'start_date' => 'timestamps',
+        'end_date' => 'timestamps',
         'active' => 'boolean',
         'showing' =>'string'
     ];
