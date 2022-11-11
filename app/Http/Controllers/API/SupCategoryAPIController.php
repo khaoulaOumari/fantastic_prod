@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Exceptions\RepositoryException;
+use App\Repositories\FoodRepository;
 
 /**
  * Class CategoryController
@@ -30,9 +31,10 @@ class SupCategoryAPIController extends Controller
     /** @var  SupCategoryRepository */
     private $supcategoryRepository;
 
-    public function __construct(SupCategoryRepository $supcategoryRepo)
+    public function __construct(SupCategoryRepository $supcategoryRepo,FoodRepository $foodRepo)
     {
         $this->supcategoryRepository = $supcategoryRepo;
+        $this->foodRepository = $foodRepo;
     }
 
     /**
@@ -95,7 +97,12 @@ class SupCategoryAPIController extends Controller
     {
         /** @var SupCategory $category */
         if (!empty($this->supcategoryRepository)) {
-            $category = $this->supcategoryRepository->with(['categories','categories.limitFoods'])->findWithoutFail($id);
+            $category = $this->supcategoryRepository->with('categories')->findWithoutFail($id);
+            foreach($category->categories as $row){
+                $foods = $this->foodRepository->where('category_id',$row->id)->where('featured',1)->take(10)->get();
+                $row->limit_foods = $foods;
+            }
+            // 'categories.limitFoods'
             
         }
 
