@@ -3,7 +3,7 @@
 @endif
 <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
     <!-- Order Field -->
-    <div class="form-group row ">
+    <!-- <div class="form-group row ">
         {!! Form::label('order', trans("lang.slide_order"), ['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
             {!! Form::number('order', null,  ['class' => 'form-control','placeholder'=>  trans("lang.slide_order_placeholder")]) !!}
@@ -11,7 +11,7 @@
                 {{ trans("lang.slide_order_help") }}
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Text Field -->
     <div class="form-group row ">
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Button Field -->
-    <div class="form-group row ">
+    <!-- <div class="form-group row ">
         {!! Form::label('button', trans("lang.slide_button"), ['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
             {!! Form::text('button', null,  ['class' => 'form-control','placeholder'=>  trans("lang.slide_button_placeholder")]) !!}
@@ -33,7 +33,7 @@
                 {{ trans("lang.slide_button_help") }}
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Text Position Field -->
     <div class="form-group row ">
@@ -71,7 +71,7 @@
     </div>
 
     <!-- Button Color Field -->
-    <div class="form-group row">
+    <!-- <div class="form-group row">
         {!! Form::label('button_color', trans("lang.slide_button_color"), ['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
             <div id="main-colorpicker" class="input-group colorpicker-component">
@@ -84,10 +84,10 @@
                 {{ trans("lang.slide_button_color_help") }}
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Background Color Field -->
-    <div class="form-group row">
+    <!-- <div class="form-group row">
         {!! Form::label('background_color', trans("lang.slide_background_color"), ['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
             <div id="main-colorpicker" class="input-group colorpicker-component">
@@ -100,14 +100,14 @@
                 {{ trans("lang.slide_background_color_help") }}
             </div>
         </div>
-    </div>
+    </div> -->
 
 </div>
 <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
 
 
     <!-- Indicator Color Field -->
-    <div class="form-group row">
+    <!-- <div class="form-group row">
         {!! Form::label('indicator_color', trans("lang.slide_indicator_color"), ['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
             <div id="main-colorpicker" class="input-group colorpicker-component">
@@ -120,7 +120,7 @@
                 {{ trans("lang.slide_indicator_color_help") }}
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Image Field -->
     <div class="form-group row">
@@ -199,22 +199,22 @@
     </div>
 
     <!-- Food Id Field -->
-    <div class="form-group row ">
+    <!-- <div class="form-group row ">
         {!! Form::label('food_id', trans("lang.slide_food_id"),['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
             {!! Form::select('food_id', $food, null, ['data-empty'=>trans("lang.slide_food_id_placeholder"),'class' => 'select2 not-required form-control']) !!}
             <div class="form-text text-muted">{{ trans("lang.slide_food_id_help") }}</div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Restaurant Id Field -->
-    <div class="form-group row ">
+    <!-- <div class="form-group row ">
         {!! Form::label('restaurant_id', trans("lang.slide_restaurant_id"),['data-empty'=>trans("lang.slide_restaurant_id_placeholder"),'class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
             {!! Form::select('restaurant_id', $restaurant, null, ['class' => 'select2 not-required form-control']) !!}
             <div class="form-text text-muted">{{ trans("lang.slide_restaurant_id_help") }}</div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 'Boolean Enabled Field' -->
     <div class="form-group row">

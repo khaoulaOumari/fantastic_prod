@@ -112,9 +112,12 @@ class UserAPIController extends Controller
             $user->api_token = str_random(60);
             $user->save();
 
-            $defaultRoles = $this->roleRepository->findByField('default', '1');
-            $defaultRoles = $defaultRoles->pluck('name')->toArray();
-            $user->assignRole($defaultRoles);
+
+            $user->assignRole('manager');
+
+            // $defaultRoles = $this->roleRepository->findByField('default', '1');
+            // $defaultRoles = $defaultRoles->pluck('name')->toArray();
+            // $user->assignRole($defaultRoles);
 
             event(new UserRoleChangedEvent($user));
         } catch (\Exception $e) {
