@@ -107,24 +107,25 @@ class ClaimAPIController extends Controller
     }
 
 
-    // public function fetchManagerClaim(Request $request){
+    public function fetchManagerClaim(Request $request){
         
-    //     $user = auth()->user();
+        $user = auth()->user();
 
-    //     if(!$user || !auth()->user()->hasRole('client')){
-    //         return $this->sendError('user not found');
-    //     }
+        if(!$user || !auth()->user()->hasRole('manager')){
+            return $this->sendError('user not found');
+        }
 
-    //     // ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "orders.restaurant_id")
-    //     // ->where('user_restaurants.user_id', $this->userId)
+        // ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "orders.restaurant_id")
+        // ->where('user_restaurants.user_id', $this->userId)
 
-    //     $data = SubClaimOrder::join('orders','sub_claims_orders.order_id','orders.id')
-    //     ->join('sub_claims','sub_claims_orders.sub_claim_id','sub_claims.id')
-    //     ->where('orders.user_id',$user->id)
-    //     ->select('sub_claims_orders.id','sub_claims.text','sub_claims.claim_id','sub_claims_orders.created_at','orders.id as order_id')
-    //     ->get();
+        $data = SubClaimOrder::join('orders','sub_claims_orders.order_id','orders.id')
+        ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "orders.restaurant_id")
+        ->join('sub_claims','sub_claims_orders.sub_claim_id','sub_claims.id')
+        ->where('user_restaurants.user_id',$user->id)
+        ->select('sub_claims_orders.id','sub_claims.text','sub_claims.claim_id','sub_claims_orders.created_at','orders.id as order_id')
+        ->get();
 
-    //     return $this->sendResponse($data->toArray(), 'claims retrieved successfully');
-    // }
+        return $this->sendResponse($data->toArray(), 'claims retrieved successfully');
+    }
 
 }
