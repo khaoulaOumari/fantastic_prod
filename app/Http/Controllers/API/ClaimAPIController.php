@@ -145,7 +145,7 @@ class ClaimAPIController extends Controller
         ->join('sub_claims','sub_claims_orders.sub_claim_id','sub_claims.id')
         ->where('sub_claims_orders.id',$claim->id)
         ->select('sub_claims_orders.id','sub_claims.text','sub_claims.claim_id','sub_claims_orders.created_at','orders.id as order_id')
-        ->with(['order','order.user','order.payment','order.driver'])
+        ->with(['order','order.user','order.payment','order.driver','order.orderStatus'])
         ->first();
 
         return $this->sendResponse($data, 'claims retrieved successfully');
