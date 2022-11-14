@@ -745,7 +745,7 @@ return [
     'payment_method' => 'Méthode',
     'payment_method_help' => 'Insérer méthode de paiement',
     'payment_method_placeholder' => 'Insérer méthode de Paiement',
-    'payment_order_done' => 'Order paid successfully',
+    'payment_order_done' => 'Commande payée avec succès',
     'payment_order_waiting' => 'Commande pas encore payé',
     'payment_plural' => 'Paiements',
     'payment_price' => 'Prix',

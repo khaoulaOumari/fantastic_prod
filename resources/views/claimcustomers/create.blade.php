@@ -117,7 +117,7 @@
                         $(".print-success-msg").find("ul").html('');
                         $(".print-success-msg").css('display','block');
                         $(".print-error-msg").css('display','none');
-                        $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+                        $(".print-success-msg").find("ul").append('<li>Enregistrement inséré avec succès.</li>');
                     }
                 }  
            });  

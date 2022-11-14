@@ -60,7 +60,7 @@ class RoleController extends Controller
 
         $role = $this->roleRepository->create($input);
 
-        Flash::success('Role saved successfully.');
+        Flash::success('Role enregistré avec succès.');
 
         return redirect(route('roles.index'));
     }
@@ -129,7 +129,7 @@ class RoleController extends Controller
 
         $role = $this->roleRepository->update($request->all(), $id);
 
-        Flash::success('Role updated successfully.');
+        Flash::success('Role Mis à jour avec succés.');
 
         return redirect(route('roles.index'));
     }
@@ -153,7 +153,7 @@ class RoleController extends Controller
 
         $this->roleRepository->delete($id);
 
-        Flash::success('Role deleted successfully.');
+        Flash::success('Role supprimé avec succès.');
 
         return redirect(route('roles.index'));
     }

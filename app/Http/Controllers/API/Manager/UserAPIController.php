@@ -237,7 +237,7 @@ class UserAPIController extends Controller
         );
 
         if ($response == Password::RESET_LINK_SENT) {
-            return $this->sendResponse(true, 'Reset link was sent successfully');
+            return $this->sendResponse(true, 'Le lien de réinitialisation a été envoyé avec succès');
         } else {
             return $this->sendError([
                 'error' => 'Reset link not sent',

@@ -73,7 +73,7 @@ class CustomFieldController extends Controller
         }
 
 
-        Flash::success('saved successfully.');
+        Flash::success('enregistré avec succès.');
 
         return redirect(route('customFields.index'));
     }
@@ -153,7 +153,7 @@ class CustomFieldController extends Controller
         }
 
 
-        Flash::success('Custom Field updated successfully.');
+        Flash::success('Custom Field Mis à jour avec succés.');
 
         return redirect(route('customFields.index'));
     }

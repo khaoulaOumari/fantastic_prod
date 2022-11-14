@@ -99,7 +99,7 @@ class PermissionController extends Controller
 
         $permission = $this->permissionRepository->create($input);
 
-        Flash::success('Permission saved successfully.');
+        Flash::success('Permission enregistré avec succès.');
 
         return redirect(route('permissions.index'));
     }
@@ -169,7 +169,7 @@ class PermissionController extends Controller
 
         $permission = $this->permissionRepository->update($request->all(), $id);
 
-        Flash::success('Permission updated successfully.');
+        Flash::success('Permission Mis à jour avec succés.');
 
         return redirect(route('permissions.index'));
     }
@@ -197,7 +197,7 @@ class PermissionController extends Controller
 
         $this->permissionRepository->delete($id);
 
-        Flash::success('Permission deleted successfully.');
+        Flash::success('Permission supprimée avec succès.');
 
         return redirect(route('permissions.index'));
     }

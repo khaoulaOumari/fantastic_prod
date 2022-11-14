@@ -94,7 +94,7 @@ class AppSettingController extends Controller
             $input = array_map(function ($value) { return is_null($value)? false : $value; }, $input);
 
             setting($input)->save();
-            Flash::success(trans('lang.app_setting_global').' updated successfully.');
+            Flash::success(trans('lang.app_setting_global').' Mis à jour avec succés.');
             Artisan::call("config:clear");
         }else{
             Flash::warning('This is only demo app you can\'t change this section ');

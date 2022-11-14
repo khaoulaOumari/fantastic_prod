@@ -57,7 +57,7 @@ class SubClaims extends Component
    
         $this->resetInputFields();
    
-        session()->flash('message', 'SubClaim Added Successfully.');
+        session()->flash('message', 'Sous-réclamation ajoutée avec succès.');
     }
 
     public function render()
