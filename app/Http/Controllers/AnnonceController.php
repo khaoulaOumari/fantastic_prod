@@ -66,7 +66,7 @@ class AnnonceController extends Controller
         $hasCustomField = in_array($this->annonceRepository->model(), setting('custom_field_models', []));
         $promofoods = Food::where('discount_price','!=',null)
         ->select('id','discount_price',DB::raw('CONCAT(name, " (", discount_price," Dh)") AS name'))
-        ->get()->pluck('name', 'id','discount_price')
+        ->take(10)->get()->pluck('name', 'id','discount_price')
         ->toArray();
         $promofoodselected =[];
         // $img = Food::getMedia('images')->first()->getUrl('thumb');
@@ -175,7 +175,7 @@ class AnnonceController extends Controller
         }
         // $supcategory = $this->supannonceRepository->pluck('name', 'id');
         $promofoods = Food::where('discount_price','!=',null)
-        ->select('id',DB::raw('CONCAT(name, " (", discount_price," Dh)") AS name'))->get()->pluck('name', 'id')->toArray();
+        ->select('id',DB::raw('CONCAT(name, " (", discount_price," Dh)") AS name'))->take(10)->get()->pluck('name', 'id')->toArray();
         $promofoodselected = $annonce->join('annonce_foods','annonces.id','annonce_foods.annonce_id')
                                     ->join('foods','annonce_foods.food_id','foods.id')
                                     ->select('foods.id',DB::raw('CONCAT(foods.name, " (", foods.discount_price," Dh)") AS name'))
