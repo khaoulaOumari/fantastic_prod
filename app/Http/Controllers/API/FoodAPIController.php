@@ -154,7 +154,7 @@ class FoodAPIController extends Controller
         $this->foodRepository->pushCriteria(new RequestCriteria($request));
         $this->foodRepository->pushCriteria(new LimitOffsetCriteria($request));
         // $this->foodRepository->pushCriteria(new FoodsOfCuisinesCriteria($request));
-        $foods = $this->foodRepository->where('discount_price','!=',null)->get();
+        $foods = $this->foodRepository->where('discount_price','!=',null)->paginate(10);
         
         return $this->sendResponse($foods->toArray(), 'Foods retrieved successfully');
     }
