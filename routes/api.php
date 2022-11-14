@@ -118,6 +118,8 @@ Route::middleware('auth:api')->group(function () {
             Route::resource('faq_categories', 'API\FaqCategoryAPIController');
             Route::resource('faqs', 'API\FaqAPIController');
             Route::get('managerClaims', 'API\ClaimAPIController@fetchManagerClaim');
+            Route::get('showClaim/{id}', 'API\ClaimAPIController@managerClaim');
+
             
         });
     });
@@ -168,6 +170,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('fetch_claims', 'API\ClaimAPIController@index');
     Route::post('new_claims', 'API\ClaimAPIController@create');
+
+
+    Route::get('fetch_users', 'UserAPIController@fetchUsers');
     
 
 

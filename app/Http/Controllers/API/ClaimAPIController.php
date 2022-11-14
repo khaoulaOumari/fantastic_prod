@@ -115,8 +115,6 @@ class ClaimAPIController extends Controller
             return $this->sendError('user not found');
         }
 
-        // ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "orders.restaurant_id")
-        // ->where('user_restaurants.user_id', $this->userId)
 
         $data = SubClaimOrder::join('orders','sub_claims_orders.order_id','orders.id')
         ->join("user_restaurants", "user_restaurants.restaurant_id", "=", "orders.restaurant_id")
@@ -126,6 +124,31 @@ class ClaimAPIController extends Controller
         ->get();
 
         return $this->sendResponse($data->toArray(), 'claims retrieved successfully');
+    }
+
+
+    public function managerClaim(Request $request,$id){
+        
+        $user = auth()->user();
+
+        if(!$user || !auth()->user()->hasRole('manager')){
+            return $this->sendError('user not found');
+        }
+
+        $claim = SubClaimOrder::findOrfail($id);
+        
+        if(empty($claim)){
+            return $this->sendError('user not claim');
+        }
+
+        $data = SubClaimOrder::join('orders','sub_claims_orders.order_id','orders.id')
+        ->join('sub_claims','sub_claims_orders.sub_claim_id','sub_claims.id')
+        ->where('sub_claims_orders.id',$claim->id)
+        ->select('sub_claims_orders.id','sub_claims.text','sub_claims.claim_id','sub_claims_orders.created_at','orders.id as order_id')
+        ->with(['order','order.user','order.payment','order.driver'])
+        ->first();
+
+        return $this->sendResponse($data, 'claims retrieved successfully');
     }
 
 }
