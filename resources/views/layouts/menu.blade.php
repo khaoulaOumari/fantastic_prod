@@ -308,7 +308,7 @@
 @endcan -->
 
 @can('app-settings')
-    <li class="nav-item has-treeview {{ Request::is('settings/mobile*') || Request::is('slides*') ? 'menu-open' : '' }}">
+    <!-- <li class="nav-item has-treeview {{ Request::is('settings/mobile*') || Request::is('slides*') ? 'menu-open' : '' }}">
         <a href="#" class="nav-link {{ Request::is('settings/mobile*') || Request::is('slides*') ? 'active' : '' }}">
             @if($icons)<i class="nav-icon fa fa-mobile"></i>@endif
             <p>
@@ -337,14 +337,14 @@
                 </a>
             </li>
 
-            <!-- @can('slides.index')
+            @can('slides.index')
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('slides*') ? 'active' : '' }}" href="{!! route('slides.index') !!}">@if($icons)<i class="nav-icon fa fa-magic"></i>@endif<p>{{trans('lang.slide_plural')}} </p></a>
                 </li>
-            @endcan -->
+            @endcan 
         </ul>
 
-    </li>
+    </li> -->
     <li class="nav-item has-treeview {{
     (Request::is('settings*') ||
      Request::is('users*')) && !Request::is('settings/mobile*')
