@@ -81,7 +81,9 @@ class FoodAPIController extends Controller
 
 //            $this->foodRepository->orderBy('closed');
 //            $this->foodRepository->orderBy('area');
-            $foods = $this->foodRepository->all();
+            // $foods = $this->foodRepository->all();
+            $foods = $this->foodRepository->paginate();
+
 
         } catch (RepositoryException $e) {
             return $this->sendError($e->getMessage());
