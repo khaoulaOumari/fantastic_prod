@@ -153,6 +153,7 @@ Route::middleware('auth:api')->group(function () {
     
 
     Route::resource('delivery_addresses', 'API\DeliveryAddressAPIController');
+    Route::get('user_addresses', 'API\DeliveryAddressAPIController@fetchUserAdress');
 
     Route::resource('drivers', 'API\DriverAPIController');
 

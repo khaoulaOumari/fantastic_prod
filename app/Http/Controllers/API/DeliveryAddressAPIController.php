@@ -47,6 +47,23 @@ class DeliveryAddressAPIController extends Controller
         return $this->sendResponse($deliveryAddresses->toArray(), 'Delivery Addresses retrieved successfully');
     }
 
+
+    public function fetchUserAdress(Request $request)
+    {
+        try {
+            $user = auth()->user();
+            if($user && $user->hasRole('client')){
+                $deliveryAddresses = $this->deliveryAddressRepository->where('user_id',$user->id)->all();
+            }
+            
+        } catch (RepositoryException $e) {
+            return $this->sendError($e->getMessage());
+        }
+        
+
+        return $this->sendResponse($deliveryAddresses->toArray(), 'Delivery Addresses retrieved successfully');
+    }
+
     /**
      * Display the specified DeliveryAddress.
      * GET|HEAD /deliveryAddresses/{id}
