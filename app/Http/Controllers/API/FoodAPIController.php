@@ -83,11 +83,16 @@ class FoodAPIController extends Controller
             $foods = $this->foodRepository->paginate();
             if($request->api_token){
                 $user = User::where('api_token',$request->api_token)->first();
-                if(Cart::where('user_id',$user->id)->exists()){
-                    foreach($foods as $food){
-                        $food->cart_count = inCart($user->id,$food->id);
-                    }
+                if($user){
+                    if(Cart::where('user_id',$user->id)->exists()){
+                        foreach($foods as $food){
+                            $food->cart_count = inCart($user->id,$food->id);
+                        }
+                    }    
+                }else{
+                    $foods = $this->foodRepository->paginate();
                 }
+                
                
             }
            
