@@ -32,6 +32,7 @@ use Carbon\Carbon;
 use App\Models\OrderHistory;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -79,10 +80,18 @@ class FoodAPIController extends Controller
                 $this->foodRepository->pushCriteria(new NearCriteria($request));
             }
 
-//            $this->foodRepository->orderBy('closed');
-//            $this->foodRepository->orderBy('area');
-            // $foods = $this->foodRepository->all();
             $foods = $this->foodRepository->paginate();
+            if($request->api_token){
+                $user = User::where('api_token',$request->api_token)->first();
+                if(Cart::where('user_id',$user->id)->exists()){
+                    foreach($foods as $food){
+                        $food->cart_count = inCart($user->id,$food->id);
+                    }
+                }
+               
+            }
+           
+            
 
 
         } catch (RepositoryException $e) {
@@ -301,6 +310,7 @@ class FoodAPIController extends Controller
 
     public function getFoods(Request $request){
 
+        return inCart(3,17);
 
         $data = Food::join('food_orders','foods.id','food_orders.food_id')->join('orders','food_orders.order_id','orders.id')
         ->select('food_orders.order_id',DB::raw("(SUM((food_orders.price - foods.prix_achat)*food_orders.quantity))+(orders.delivery_fee - orders.driver_fee) as profit"))

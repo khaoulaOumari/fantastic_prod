@@ -15,6 +15,7 @@ use App\Models\Stock;
 use App\Models\StockHistory;
 use App\Models\OrderHistory;
 use App\Models\Order;
+use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
 
 
@@ -881,4 +882,11 @@ function distance($latitude1, $longitude1, $latitude2, $longitude2) {
 
     function notifData($data){
         return json_decode($data, true);
+    }
+
+
+
+    function inCart($userId,$foodId){
+        $arr = Cart::where('user_id',$userId)->where('food_id',$foodId)->sum('quantity');
+        return $arr;
     }

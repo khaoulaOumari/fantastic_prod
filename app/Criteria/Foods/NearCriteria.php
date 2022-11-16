@@ -60,16 +60,18 @@ class NearCriteria implements CriteriaInterface
             POW(69.1 * ($areaLon - restaurants.longitude) * COS(restaurants.latitude / 57.3), 2)) AS area"), "foods.*")
                 ->groupBy("foods.id")
                 ->where('restaurants.active','1')
-                ->orderBy('restaurants.closed')
+                // ->orderBy('restaurants.closed')
                 ->orderBy('area');
         } else {
             
-            return $model->join('food_restaurants', 'food_restaurants.food_id', '=', 'foods.id')
-            ->join('restaurants', 'restaurants.id', '=', 'food_restaurants.restaurant_id')
-                ->groupBy("foods.id")
-                ->where('restaurants.active','1')
+                return $model->join('food_restaurants', 'food_restaurants.food_id', '=', 'foods.id')
+                ->join('restaurants', 'restaurants.id', '=', 'food_restaurants.restaurant_id')
                 ->select("foods.*")
-                ->orderBy('restaurants.closed');
+                ->where('restaurants.active','1')
+                ->groupBy("foods.id");
+
+                
+            
         }
     }
 }
