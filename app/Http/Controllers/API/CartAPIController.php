@@ -196,7 +196,7 @@ class CartAPIController extends Controller
     {
         $user = auth()->user();
         if($user && $user->hasRole('client')){
-            $cart = $this->cartRepository->where('id',$id)->where('user_id',$user->id)->first();
+            $cart = $this->cartRepository->where('food_id',$id)->where('user_id',$user->id)->first();
 
             if (empty($cart)) {
                 return $this->sendError('Cart not found');
