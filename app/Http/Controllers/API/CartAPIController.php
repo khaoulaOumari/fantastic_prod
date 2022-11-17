@@ -108,12 +108,18 @@ class CartAPIController extends Controller
                 // delete all items in the cart of current user
                 $this->cartRepository->deleteWhere(['user_id'=> $input['user_id']]);
             }
-            $cart = $this->cartRepository->create($input);
+            $old_cart = $this->cartRepository->where('user_id',$input['user_id'])->where('food_id',$input['food_id'])->first();
+            if($old_cart){
+                $old_cart = $this->cartRepository->update(['quantity'=>$old_cart->quantity+$request->quantity], $old_cart->id);
+            }else{
+                $old_cart = $this->cartRepository->create($input);
+            }
+            
         } catch (ValidatorException $e) {
             return $this->sendError($e->getMessage());
         }
 
-        return $this->sendResponse($cart->toArray(), __('lang.saved_successfully',['operator' => __('lang.cart')]));
+        return $this->sendResponse($old_cart->toArray(), __('lang.saved_successfully',['operator' => __('lang.cart')]));
     }
     
     
