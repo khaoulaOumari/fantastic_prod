@@ -203,9 +203,9 @@ class CartAPIController extends Controller
             }
 
             try {
-                $cart = $this->cartRepository->update(['quantity'=>$request->quantity], $id);
+                $cart = $this->cartRepository->update(['quantity'=>$request->quantity], $cart->id);
                 if($cart->quantity == 0){
-                    $this->cartRepository->delete($id);
+                    $this->cartRepository->delete($cart->id);
                 }
 
             } catch (ValidatorException $e) {
