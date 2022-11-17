@@ -97,7 +97,10 @@ class SupCategoryAPIController extends Controller
     {
         /** @var SupCategory $category */
         if (!empty($this->supcategoryRepository)) {
-            $category = $this->supcategoryRepository->with('categories')->findWithoutFail($id);
+            $category = $this->supcategoryRepository->with(['categories',
+            'categories' => function ($query) {
+                $query->withCount('foods');
+            }])->findWithoutFail($id);
             foreach($category->categories as $row){
                 $foods = $this->foodRepository->where('category_id',$row->id)->where('featured',1)->take(10)->get();
                 $row->limit_foods = $foods;
