@@ -191,4 +191,32 @@ class CartAPIController extends Controller
 
     }
 
+
+    public function editCart(Request $request,$id)
+    {
+        $user = auth()->user();
+        if($user && $user->hasRole('client')){
+            $cart = $this->cartRepository->where('id',$id)->where('user_id',$user->id)->first();
+
+            if (empty($cart)) {
+                return $this->sendError('Cart not found');
+            }
+
+            try {
+                $cart = $this->cartRepository->update(['quantity'=>$request->quantity], $id);
+                if($cart->quantity == 0){
+                    $this->cartRepository->delete($id);
+                }
+
+            } catch (ValidatorException $e) {
+                return $this->sendError($e->getMessage());
+            }
+
+            return $this->sendResponse($cart->toArray(), __('lang.saved_successfully',['operator' => __('lang.cart')]));    
+        }else{
+            return $this->sendError('User not found');
+        }
+        
+    }
+
 }

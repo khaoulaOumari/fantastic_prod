@@ -149,6 +149,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('carts/count', 'API\CartAPIController@count')->name('carts.count');
     Route::post('reorder', 'API\CartAPIController@storeMultiple');
+    Route::post('carts/editqnty/{id}', 'API\CartAPIController@editCart');
+
     Route::resource('carts', 'API\CartAPIController');
     
 
