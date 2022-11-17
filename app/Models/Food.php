@@ -194,6 +194,12 @@ class Food extends Model implements HasMedia
         return $this->hasMany(\App\Models\Extra::class, 'food_id');
     }
 
+
+    public function cart()
+    {
+        return $this->hasMany(\App\Models\Cart::class, 'food_id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      **/

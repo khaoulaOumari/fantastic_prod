@@ -80,7 +80,7 @@ class CategoryAPIController extends Controller
 
     public function fetchProdCategory($id)
     {
-        $category = $this->categoryRepository->with('foods')->findWithoutFail($id);
+        $category = $this->categoryRepository->with('limitFoods')->findWithoutFail($id);
 
         if (empty($category)) {
             return $this->sendError('Category not found');

@@ -170,7 +170,24 @@ class FoodAPIController extends Controller
         $this->foodRepository->pushCriteria(new RequestCriteria($request));
         $this->foodRepository->pushCriteria(new LimitOffsetCriteria($request));
         // $this->foodRepository->pushCriteria(new FoodsOfCuisinesCriteria($request));
+
         $foods = $this->foodRepository->where('discount_price','!=',null)->paginate(10);
+        if($request->api_token){
+            $user = User::where('api_token',$request->api_token)->first();
+            if($user){
+                if(Cart::where('user_id',$user->id)->exists()){
+                    foreach($foods as $food){
+                        $food->cart_count = inCart($user->id,$food->id);
+                    }
+                }    
+            }else{
+                $foods = $this->foodRepository->where('discount_price','!=',null)->paginate(10);
+            }
+            
+           
+        }
+
+        // $foods = $this->foodRepository->where('discount_price','!=',null)->paginate(10);
         
         return $this->sendResponse($foods->toArray(), 'Foods retrieved successfully');
     }

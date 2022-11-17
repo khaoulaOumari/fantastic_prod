@@ -148,7 +148,7 @@ class Category extends Model implements HasMedia
 
     public function limitFoods()
     {
-        return $this->hasMany(\App\Models\Food::class, 'category_id')->limit(10);
+        return $this->hasMany(\App\Models\Food::class, 'category_id');
     }
 
 
