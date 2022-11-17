@@ -217,12 +217,17 @@ class FoodAPIController extends Controller
             } catch (RepositoryException $e) {
                 return $this->sendError($e->getMessage());
             }
-            $food = $this->foodRepository->findWithoutFail($id);
+            
         }
+        $food = $this->foodRepository->findWithoutFail($id);
 
         if (empty($food)) {
             return $this->sendError('Food not found');
         }
+
+        $similars = $this->foodRepository->where('category_id',  $food->category_id)->where('id','!=',$id)->limit(10)->get();
+        $food->similars = $similars;
+
 
         return $this->sendResponse($food->toArray(), 'Food retrieved successfully');
     }
