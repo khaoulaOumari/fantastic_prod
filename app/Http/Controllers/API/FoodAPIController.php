@@ -249,7 +249,7 @@ class FoodAPIController extends Controller
         if($request->api_token){
             $user = User::where('api_token',$request->api_token)->first();
             if($user){
-                if(Cart::where('user_id',$user->id)->where('food_id')->exists()){
+                if(Cart::where('user_id',$user->id)->exists()){
                     foreach($similars as $similar){
                         $similar->cart_count = inCart($user->id,$similar->id);
                     }
