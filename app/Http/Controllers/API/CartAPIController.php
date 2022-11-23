@@ -133,9 +133,9 @@ class CartAPIController extends Controller
             }
             if(count($request->products)>0){
                 foreach($request->products as $row){
-                    $old_cart = $this->cartRepository->where('user_id',$input['user_id'])->where('food_id',$row['food_id'])->first();
-                    if($old_cart){
-                        $old_cart = $this->cartRepository->update(['quantity'=>$old_cart->quantity+$row['quantity']], $old_cart->id);
+                    $cart = $this->cartRepository->where('user_id',$input['user_id'])->where('food_id',$row['food_id'])->first();
+                    if($cart){
+                        $cart = $this->cartRepository->update(['quantity'=>$cart->quantity+$row['quantity']], $cart->id);
                     }else{
                         $cart = new Cart();
                         $cart->food_id = $row['food_id'];
