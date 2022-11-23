@@ -133,11 +133,18 @@ class CartAPIController extends Controller
             }
             if(count($request->products)>0){
                 foreach($request->products as $row){
-                    $cart = new Cart();
-                    $cart->food_id = $row['food_id'];
-                    $cart->user_id = $input['user_id'];
-                    $cart->quantity = $row['quantity'];
-                    $cart->save();
+                    $old_cart = $this->cartRepository->where('user_id',$input['user_id'])->where('food_id',$row['food_id'])->first();
+                    if($old_cart){
+                        $old_cart = $this->cartRepository->update(['quantity'=>$old_cart->quantity+$row['quantity']], $old_cart->id);
+                    }else{
+                        $cart = new Cart();
+                        $cart->food_id = $row['food_id'];
+                        $cart->user_id = $input['user_id'];
+                        $cart->quantity = $row['quantity'];
+                        $cart->save();
+                    }
+
+                    
                 }
             }
         } catch (ValidatorException $e) {
