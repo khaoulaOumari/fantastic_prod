@@ -9,6 +9,13 @@
 $(document).ready(function () {
     let select2;
     let options;
+
+    // if ($('textarea').length > 0) {
+    //     $('textarea').summernote({
+    //         height: 200
+    //     });
+    // }
+
     if ($('.icheck input').length > 0) {
         $('.icheck input').iCheck({
             checkboxClass: 'icheckbox_flat-blue',
@@ -16,11 +23,7 @@ $(document).ready(function () {
             increaseArea: '20%' // optional
         });
     }
-    if ($('textarea').length > 0) {
-        $('textarea').summernote({
-            height: 200
-        });
-    }
+    
     if ($('.datepicker').length > 0) {
         $('.datepicker').datepicker({
             format: "yyyy-mm-dd",

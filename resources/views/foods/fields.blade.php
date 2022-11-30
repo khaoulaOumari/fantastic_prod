@@ -109,9 +109,9 @@
     <div class="form-group row ">
         {!! Form::label('description', trans("lang.food_description"), ['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
-        <textarea type="text" class="form-control" name="description">description </textarea>
-            {!! Form::textarea('description', null, ['class' => 'form-control','placeholder'=>
-             trans("lang.food_description_placeholder")  ]) !!}
+        {!! Form::textarea('description', null, ['class' => 'form-control','placeholder'=>
+            trans("lang.food_description_help")  ]) !!}
+        <!-- <textarea type="text"  class="form-control" name="description"></textarea> -->
             <div class="form-text text-muted">{{ trans("lang.food_description_help") }}</div>
         </div>
     </div>
